@@ -165,6 +165,7 @@
 			isa = PBXGroup;
 			children = (
 				01C688781BCF9CBA00DB7828 /* nibs */,
+				015F09F31BCFE4E000CA9E3D /* Assets.xcassets */,
 			);
 			path = res;
 			sourceTree = "<group>";
@@ -172,7 +173,6 @@
 		01C688781BCF9CBA00DB7828 /* nibs */ = {
 			isa = PBXGroup;
 			children = (
-				015F09F31BCFE4E000CA9E3D /* Assets.xcassets */,
 				01C688691BCF98C400DB7828 /* LaunchScreen.storyboard */,
 				01C688641BCF98C400DB7828 /* Main.storyboard */,
 			);
