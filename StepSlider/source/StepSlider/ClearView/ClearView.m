@@ -15,6 +15,7 @@
     self = [super init];
     if (self) {
         self.backgroundColor = [UIColor clearColor];
+        self.userInteractionEnabled = NO;
     }
     return self;
 }

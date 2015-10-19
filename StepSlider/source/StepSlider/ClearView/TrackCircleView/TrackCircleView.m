@@ -21,7 +21,8 @@
     CGContextAddPath(ctx, switchOutline.CGPath);
     CGContextClip(ctx);
     
-    CGColorRef colorToFill = self.selected ? self.sliderView.tintColor.CGColor : self.sliderView.trackColor.CGColor;
+    BOOL selected = self.sliderView.sliderPosition >= self.center.x - [self.sliderView maxRadius];
+    CGColorRef colorToFill = selected ? self.sliderView.tintColor.CGColor : self.sliderView.trackColor.CGColor;
     CGContextSetFillColorWithColor(ctx, colorToFill);
     CGContextAddPath(ctx, switchOutline.CGPath);
     CGContextFillPath(ctx);

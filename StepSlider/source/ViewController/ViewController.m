@@ -10,4 +10,9 @@
 
 @implementation ViewController
 
+- (IBAction)changeValue:(StepSlider *)sender
+{
+    NSLog(@"index: %i", sender.index);
+}
+
 @end

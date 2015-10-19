@@ -21,6 +21,9 @@
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" red="0.094117647058823528" green="0.70980392156862748" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
+                                <connections>
+                                    <action selector="changeValue:" destination="BYZ-38-t0r" eventType="valueChanged" id="lGe-Au-Brq"/>
+                                </connections>
                             </view>
                         </subviews>
                         <animations/>

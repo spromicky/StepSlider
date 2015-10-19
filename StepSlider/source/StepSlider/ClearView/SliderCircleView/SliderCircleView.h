@@ -9,10 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "ClearView.h"
 
-@class StepSlider;
-
 @interface SliderCircleView : ClearView
-
-@property (nonatomic, weak) StepSlider *sliderView;
 
 @end

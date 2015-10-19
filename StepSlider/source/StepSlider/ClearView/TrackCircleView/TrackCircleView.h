@@ -9,11 +9,6 @@
 #import <UIKit/UIKit.h>
 #import "ClearView.h"
 
-@class StepSlider;
-
 @interface TrackCircleView : ClearView
-
-@property (nonatomic, weak) StepSlider *sliderView;
-@property (nonatomic) BOOL selected;
 
 @end

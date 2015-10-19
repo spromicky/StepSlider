@@ -19,8 +19,7 @@
     CGContextAddPath(ctx, [UIBezierPath bezierPathWithRect:self.bounds].CGPath);
     CGContextFillPath(ctx);
     
-    CGFloat fillWidth = self.bounds.size.width / (self.sliderView.maxCount - 1) * self.sliderView.stepIndex;
-    CGRect fillRect = CGRectMake(0.f, 0.f, fillWidth, self.bounds.size.height);
+    CGRect fillRect = CGRectMake(0.f, 0.f, self.sliderView.sliderPosition, self.bounds.size.height);
     CGContextSetFillColorWithColor(ctx, self.sliderView.tintColor.CGColor);
     CGContextAddPath(ctx, [UIBezierPath bezierPathWithRect:fillRect].CGPath);
     CGContextFillPath(ctx);

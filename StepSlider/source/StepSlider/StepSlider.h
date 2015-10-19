@@ -8,10 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+IB_DESIGNABLE
+
 @interface StepSlider : UIControl
 
 @property (nonatomic) NSUInteger maxCount;
-@property (nonatomic) NSUInteger stepIndex;
+@property (nonatomic) NSUInteger index;
 
 @property (nonatomic) CGFloat trackHeight;
 @property (nonatomic) CGFloat trackCircleRadius;
@@ -19,5 +21,8 @@
 
 @property (nonatomic, strong) UIColor *trackColor;
 @property (nonatomic, strong) UIColor *sliderCircleColor;
+
+- (CGFloat)sliderPosition;
+- (CGFloat)maxRadius;
 
 @end

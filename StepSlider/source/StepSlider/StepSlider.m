@@ -70,8 +70,8 @@
     [self addSubview:_trackView];
     [self addSubview:_sliderView];
     
-    self.maxCount           = 5;
-    self.stepIndex          = 3;
+    self.maxCount           = 4;
+    self.index              = 2;
     self.trackHeight        = 4.f;
     self.trackCircleRadius  = 5.f;
     self.sliderCircleRadius = 12.5f;
@@ -85,10 +85,23 @@
 {
     [super layoutSubviews];
     
-    _trackView.frame = CGRectMake(0.f,
-                                   (self.bounds.size.height - self.trackHeight) / 2.f,
-                                   self.bounds.size.width,
-                                   self.trackHeight);
+    CGRect contentFrame = CGRectMake([self maxRadius], 0.f, self.bounds.size.width - 2 * [self maxRadius], self.bounds.size.height);
+    
+    CGFloat stepWidth            = contentFrame.size.width / (self.maxCount - 1);
+    CGFloat circleY              = contentFrame.size.height / 2.f - self.trackCircleRadius;
+    CGFloat circleFrameSide      = self.trackCircleRadius * 2.f;
+    
+    CGFloat sliderFrameSide = self.sliderCircleRadius * 2.f;
+    _sliderView.frame = CGRectMake(contentFrame.origin.x + stepWidth * self.index - self.sliderCircleRadius,
+                                   contentFrame.size.height / 2.f - self.sliderCircleRadius,
+                                   sliderFrameSide,
+                                   sliderFrameSide);
+    [_sliderView setNeedsDisplay];
+    
+    _trackView.frame = CGRectMake(contentFrame.origin.x,
+                                  (contentFrame.size.height - self.trackHeight) / 2.f,
+                                  contentFrame.size.width,
+                                  self.trackHeight);
     [_trackView setNeedsDisplay];
     
     if (_trackCirclesArray.count > self.maxCount) {
@@ -99,10 +112,6 @@
         }
     }
     
-    CGFloat stepWidth            = self.bounds.size.width / (self.maxCount - 1);
-    CGFloat circleY              = self.bounds.size.height / 2.f - self.trackCircleRadius;
-    CGFloat circleFrameSide      = self.trackCircleRadius * 2.f;
-    
     for (NSUInteger i = 0; i < self.maxCount; i++) {
         TrackCircleView *trackCircle;
         
@@ -110,25 +119,80 @@
             trackCircle = _trackCirclesArray[i];
         } else {
             trackCircle = [[TrackCircleView alloc] init];
-            [_trackCirclesArray addObject:trackCircle];
             trackCircle.sliderView = self;
+            
             [self addSubview:trackCircle];
+            [_trackCirclesArray addObject:trackCircle];
         }
         
         CGFloat trackCircleX = stepWidth * i - self.trackCircleRadius;
         
-        trackCircle.selected = i < self.stepIndex;
-        trackCircle.frame = CGRectMake(trackCircleX, circleY, circleFrameSide, circleFrameSide);
+        trackCircle.frame = CGRectMake(contentFrame.origin.x + trackCircleX, circleY, circleFrameSide, circleFrameSide);
         [trackCircle setNeedsDisplay];
     }
     
-    CGFloat sliderFrameSide = self.sliderCircleRadius * 2.f;
-    _sliderView.frame = CGRectMake(stepWidth * self.stepIndex - self.sliderCircleRadius,
-                                    self.bounds.size.height / 2.f - self.sliderCircleRadius,
-                                    sliderFrameSide,
-                                    sliderFrameSide);
     [self bringSubviewToFront:_sliderView];
-    [_sliderView setNeedsDisplay];
+}
+
+- (CGFloat)maxRadius
+{
+    return fmaxf(self.trackCircleRadius, self.sliderCircleRadius);
+}
+
+- (CGFloat)sliderPosition
+{
+    return _sliderView.center.x - [self maxRadius];
+}
+
+- (CGFloat)indexCalculate
+{
+    return [self sliderPosition] / (_trackView.bounds.size.width / (self.maxCount - 1));
+}
+
+#pragma mark - Touches
+
+- (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
+{
+    return CGRectContainsPoint(_sliderView.frame, [touch locationInView:self]);
+}
+
+- (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
+{
+    CGFloat maxRadius = fmaxf(self.trackCircleRadius, self.sliderCircleRadius);
+    CGFloat position = [touch locationInView:self].x;
+    CGFloat limitedPosition = fminf(fmaxf(position, maxRadius), self.bounds.size.width - maxRadius);
+    
+    _sliderView.center = CGPointMake(limitedPosition, _sliderView.center.y);
+    [_trackView setNeedsDisplay];
+    
+    NSUInteger index = [self indexCalculate];
+    if (_index != index) {
+        for (TrackCircleView *trackCircle in _trackCirclesArray) {
+            [trackCircle setNeedsDisplay];
+        }
+        _index = index;
+        [self sendActionsForControlEvents:UIControlEventValueChanged];
+    }
+    
+    return YES;
+}
+
+- (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
+{
+    self.index = roundf([self indexCalculate]);
+    [UIView animateWithDuration:0.3f animations:^{
+        [self setNeedsLayout];
+    }];
+}
+
+#pragma mark - Access methods
+
+- (void)setIndex:(NSUInteger)index
+{
+    if (_index != index) {
+        _index = index;
+        [self sendActionsForControlEvents:UIControlEventValueChanged];
+    }
 }
 
 @end

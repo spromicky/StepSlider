@@ -8,6 +8,10 @@
 
 #import <UIKit/UIKit.h>
 
+@class StepSlider;
+
 @interface ClearView : UIView
+
+@property (nonatomic, weak) StepSlider *sliderView;
 
 @end

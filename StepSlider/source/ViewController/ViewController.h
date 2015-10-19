@@ -7,9 +7,11 @@
 //
 
 #import <UIKit/UIKit.h>
+#import "StepSlider.h"
 
 @interface ViewController : UIViewController
 
+- (IBAction)changeValue:(StepSlider *)sender;
 
 @end
 
