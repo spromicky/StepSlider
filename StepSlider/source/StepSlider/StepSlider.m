@@ -64,9 +64,12 @@
 {
     _trackCirclesArray = [[NSMutableArray alloc] init];
     _trackLayer = [CAShapeLayer layer];
+
+    
+    [self.layer addSublayer:_trackLayer];
+    
     _sliderView = [[SliderCircleView alloc] init];
     _sliderView.sliderView = self;
-    [self.layer addSublayer:_trackLayer];
     [self addSubview:_sliderView];
     
     self.maxCount           = 4;
@@ -99,14 +102,15 @@
     
     
     _trackLayer.frame = CGRectMake(contentFrame.origin.x,
-                                  (contentFrame.size.height - self.trackHeight) / 2.f,
-                                  contentFrame.size.width,
-                                  self.trackHeight);
+                                             (contentFrame.size.height - self.trackHeight) / 2.f,
+                                             contentFrame.size.width,
+                                             self.trackHeight);
     
-    _trackLayer.path         = [UIBezierPath bezierPathWithRect:_trackLayer.bounds].CGPath;
-    _trackLayer.fillColor    = [self.trackColor CGColor];
-    _trackLayer.lineWidth    = 0.f;
-    _trackLayer.strokeEnd    = 1.f;
+    _trackLayer.path            = [self fillingPath];
+    _trackLayer.backgroundColor = [self.trackColor CGColor];
+    _trackLayer.lineWidth       = 0.f;
+    _trackLayer.fillColor       = [self.tintColor CGColor];
+
     
     if (_trackCirclesArray.count > self.maxCount) {
         NSArray *circlesToDelete = [_trackCirclesArray subarrayWithRange:NSMakeRange(self.maxCount - 1, _trackCirclesArray.count - self.maxCount)];
@@ -138,6 +142,14 @@
     [self bringSubviewToFront:_sliderView];
 }
 
+- (CGPathRef)fillingPath
+{
+    CGRect fillRect     = _trackLayer.bounds;
+    fillRect.size.width = [self sliderPosition];
+    
+    return [UIBezierPath bezierPathWithRect:fillRect].CGPath;
+}
+
 - (CGFloat)maxRadius
 {
     return fmaxf(self.trackCircleRadius, self.sliderCircleRadius);
@@ -167,6 +179,7 @@
     CGFloat limitedPosition = fminf(fmaxf(position, maxRadius), self.bounds.size.width - maxRadius);
     
     _sliderView.center = CGPointMake(limitedPosition, _sliderView.center.y);
+    _trackLayer.path = [self fillingPath];
     
     NSUInteger index = [self indexCalculate];
     if (_index != index) {
