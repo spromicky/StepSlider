@@ -20,7 +20,7 @@
                                 <rect key="frame" x="180" y="58" width="240" height="30"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <color key="tintColor" red="0.094117647058823528" green="0.70980392156862748" blue="0.93725490196078431" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" red="0.2137643914" green="0.73483758219999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
                                 <connections>
                                     <action selector="changeValue:" destination="BYZ-38-t0r" eventType="valueChanged" id="lGe-Au-Brq"/>
                                 </connections>
@@ -33,6 +33,9 @@
                             <constraint firstItem="dNa-lq-0iy" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="s6e-VT-AFC"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="sliderView" destination="dNa-lq-0iy" id="djU-DK-CQ7"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>

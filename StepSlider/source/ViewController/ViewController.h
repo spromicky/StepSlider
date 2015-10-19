@@ -11,6 +11,8 @@
 
 @interface ViewController : UIViewController
 
+@property (nonatomic, strong) IBOutlet StepSlider *sliderView;
+
 - (IBAction)changeValue:(StepSlider *)sender;
 
 @end

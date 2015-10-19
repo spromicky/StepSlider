@@ -20,6 +20,8 @@
     return LAYER_PROPERTY; \
 }
 
+static NSString * const kTrackAnimation = @"kTrackAnimation";
+
 @interface StepSlider ()
 {
     CAShapeLayer *_trackLayer;
@@ -68,15 +70,13 @@
     [self.layer addSublayer:_sliderCircleLayer];
     [self.layer addSublayer:_trackLayer];
     
-    self.maxCount           = 2;
-    self.index              = 1;
+    self.maxCount           = 4;
+    self.index              = 2;
     self.trackHeight        = 4.f;
     self.trackCircleRadius  = 5.f;
     self.sliderCircleRadius = 12.5f;
     self.trackColor         = [UIColor colorWithWhite:0.41f alpha:1.f];
     self.sliderCircleColor  = [UIColor whiteColor];
-    
-    [self layoutIfNeeded];
 }
 
 - (void)layoutSubviews
@@ -120,16 +120,18 @@
         CGRect  trackCircleFrame = CGRectMake(contentFrame.origin.x + trackCircleX, circleY, circleFrameSide, circleFrameSide);
         
         if (i < _trackCirclesArray.count) {
-            _trackCirclesArray[i].frame = trackCircleFrame;
+            trackCircle       = _trackCirclesArray[i];
+            trackCircle.frame = trackCircleFrame;
         } else {
-            trackCircle           = [CAShapeLayer layer];
-            trackCircle.frame     = trackCircleFrame;
-            trackCircle.path      = [UIBezierPath bezierPathWithRoundedRect:trackCircle.bounds cornerRadius:circleFrameSide / 2].CGPath;
-            trackCircle.fillColor = [self trackCircleColor:trackCircle];
+            trackCircle       = [CAShapeLayer layer];
+            trackCircle.frame = trackCircleFrame;
+            trackCircle.path  = [UIBezierPath bezierPathWithRoundedRect:trackCircle.bounds cornerRadius:circleFrameSide / 2].CGPath;
 
             [self.layer addSublayer:trackCircle];
             [_trackCirclesArray addObject:trackCircle];
         }
+        
+        trackCircle.fillColor = [self trackCircleColor:trackCircle];
     }
     
     [_sliderCircleLayer removeFromSuperlayer];
@@ -203,7 +205,7 @@
     
     CABasicAnimation *basicAnimation = [CABasicAnimation animationWithKeyPath:@"path"];
     basicAnimation.duration = [CATransaction animationDuration];
-    [_trackLayer addAnimation:basicAnimation forKey:@"somekey"];
+    [_trackLayer addAnimation:basicAnimation forKey:kTrackAnimation];
     
     [self setNeedsLayout];
 }
@@ -212,9 +214,13 @@
 
 - (void)setIndex:(NSUInteger)index
 {
+    NSString *error = [NSString stringWithFormat:@"Index %i beyond bounds [0 .. %i]", index, self.maxCount];
+    NSAssert((index < self.maxCount), error);
+    
     if (_index != index) {
         _index = index;
         [self sendActionsForControlEvents:UIControlEventValueChanged];
+        [self setNeedsLayout];
     }
 }
 
