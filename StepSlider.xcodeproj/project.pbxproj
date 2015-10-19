@@ -9,8 +9,6 @@
 /* Begin PBXBuildFile section */
 		015F09E91BCFA11F00CA9E3D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 015F09E81BCFA11F00CA9E3D /* QuartzCore.framework */; };
 		015F09F41BCFE4E000CA9E3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 015F09F31BCFE4E000CA9E3D /* Assets.xcassets */; settings = {ASSET_TAGS = (); }; };
-		015F09FA1BCFE88400CA9E3D /* TrackCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 015F09F91BCFE88400CA9E3D /* TrackCircleView.m */; settings = {ASSET_TAGS = (); }; };
-		015F0A011BCFEBFF00CA9E3D /* ClearView.m in Sources */ = {isa = PBXBuildFile; fileRef = 015F0A001BCFEBFF00CA9E3D /* ClearView.m */; settings = {ASSET_TAGS = (); }; };
 		01C6885D1BCF98C400DB7828 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C6885C1BCF98C400DB7828 /* main.m */; };
 		01C688601BCF98C400DB7828 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C6885F1BCF98C400DB7828 /* AppDelegate.m */; };
 		01C688631BCF98C400DB7828 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C688621BCF98C400DB7828 /* ViewController.m */; };
@@ -22,10 +20,6 @@
 /* Begin PBXFileReference section */
 		015F09E81BCFA11F00CA9E3D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		015F09F31BCFE4E000CA9E3D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		015F09F81BCFE88400CA9E3D /* TrackCircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackCircleView.h; sourceTree = "<group>"; };
-		015F09F91BCFE88400CA9E3D /* TrackCircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackCircleView.m; sourceTree = "<group>"; };
-		015F09FF1BCFEBFF00CA9E3D /* ClearView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClearView.h; sourceTree = "<group>"; };
-		015F0A001BCFEBFF00CA9E3D /* ClearView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClearView.m; sourceTree = "<group>"; };
 		01C688581BCF98C300DB7828 /* StepSlider.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StepSlider.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		01C6885C1BCF98C400DB7828 /* main.m */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.objc; path = main.m; sourceTree = "<group>"; };
 		01C6885E1BCF98C400DB7828 /* AppDelegate.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = AppDelegate.h; sourceTree = "<group>"; };
@@ -57,25 +51,6 @@
 				015F09E81BCFA11F00CA9E3D /* QuartzCore.framework */,
 			);
 			path = Frameworks;
-			sourceTree = "<group>";
-		};
-		015F09EF1BCFA7D700CA9E3D /* TrackCircleView */ = {
-			isa = PBXGroup;
-			children = (
-				015F09F81BCFE88400CA9E3D /* TrackCircleView.h */,
-				015F09F91BCFE88400CA9E3D /* TrackCircleView.m */,
-			);
-			path = TrackCircleView;
-			sourceTree = "<group>";
-		};
-		015F09FE1BCFEBEB00CA9E3D /* ClearView */ = {
-			isa = PBXGroup;
-			children = (
-				015F09EF1BCFA7D700CA9E3D /* TrackCircleView */,
-				015F09FF1BCFEBFF00CA9E3D /* ClearView.h */,
-				015F0A001BCFEBFF00CA9E3D /* ClearView.m */,
-			);
-			path = ClearView;
 			sourceTree = "<group>";
 		};
 		01C6884F1BCF98C300DB7828 = {
@@ -117,7 +92,6 @@
 		01C688721BCF98FA00DB7828 /* StepSlider */ = {
 			isa = PBXGroup;
 			children = (
-				015F09FE1BCFEBEB00CA9E3D /* ClearView */,
 				01C688731BCF995F00DB7828 /* StepSlider.h */,
 				01C688741BCF995F00DB7828 /* StepSlider.m */,
 			);
@@ -232,10 +206,8 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				015F0A011BCFEBFF00CA9E3D /* ClearView.m in Sources */,
 				01C688631BCF98C400DB7828 /* ViewController.m in Sources */,
 				01C688601BCF98C400DB7828 /* AppDelegate.m in Sources */,
-				015F09FA1BCFE88400CA9E3D /* TrackCircleView.m in Sources */,
 				01C688751BCF995F00DB7828 /* StepSlider.m in Sources */,
 				01C6885D1BCF98C400DB7828 /* main.m in Sources */,
 			);
