@@ -11,7 +11,6 @@
 		015F09F41BCFE4E000CA9E3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 015F09F31BCFE4E000CA9E3D /* Assets.xcassets */; settings = {ASSET_TAGS = (); }; };
 		015F09F71BCFE86B00CA9E3D /* SliderCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 015F09F61BCFE86B00CA9E3D /* SliderCircleView.m */; settings = {ASSET_TAGS = (); }; };
 		015F09FA1BCFE88400CA9E3D /* TrackCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 015F09F91BCFE88400CA9E3D /* TrackCircleView.m */; settings = {ASSET_TAGS = (); }; };
-		015F09FD1BCFE8A300CA9E3D /* TrackView.m in Sources */ = {isa = PBXBuildFile; fileRef = 015F09FC1BCFE8A300CA9E3D /* TrackView.m */; settings = {ASSET_TAGS = (); }; };
 		015F0A011BCFEBFF00CA9E3D /* ClearView.m in Sources */ = {isa = PBXBuildFile; fileRef = 015F0A001BCFEBFF00CA9E3D /* ClearView.m */; settings = {ASSET_TAGS = (); }; };
 		01C6885D1BCF98C400DB7828 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C6885C1BCF98C400DB7828 /* main.m */; };
 		01C688601BCF98C400DB7828 /* AppDelegate.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C6885F1BCF98C400DB7828 /* AppDelegate.m */; };
@@ -28,8 +27,6 @@
 		015F09F61BCFE86B00CA9E3D /* SliderCircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderCircleView.m; sourceTree = "<group>"; };
 		015F09F81BCFE88400CA9E3D /* TrackCircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackCircleView.h; sourceTree = "<group>"; };
 		015F09F91BCFE88400CA9E3D /* TrackCircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackCircleView.m; sourceTree = "<group>"; };
-		015F09FB1BCFE8A300CA9E3D /* TrackView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackView.h; sourceTree = "<group>"; };
-		015F09FC1BCFE8A300CA9E3D /* TrackView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackView.m; sourceTree = "<group>"; };
 		015F09FF1BCFEBFF00CA9E3D /* ClearView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClearView.h; sourceTree = "<group>"; };
 		015F0A001BCFEBFF00CA9E3D /* ClearView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = ClearView.m; sourceTree = "<group>"; };
 		01C688581BCF98C300DB7828 /* StepSlider.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = StepSlider.app; sourceTree = BUILT_PRODUCTS_DIR; };
@@ -57,15 +54,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		015F09E31BCFA0D300CA9E3D /* TrackView */ = {
-			isa = PBXGroup;
-			children = (
-				015F09FB1BCFE8A300CA9E3D /* TrackView.h */,
-				015F09FC1BCFE8A300CA9E3D /* TrackView.m */,
-			);
-			path = TrackView;
-			sourceTree = "<group>";
-		};
 		015F09E41BCFA0EA00CA9E3D /* SliderCircleView */ = {
 			isa = PBXGroup;
 			children = (
@@ -97,7 +85,6 @@
 			children = (
 				015F09E41BCFA0EA00CA9E3D /* SliderCircleView */,
 				015F09EF1BCFA7D700CA9E3D /* TrackCircleView */,
-				015F09E31BCFA0D300CA9E3D /* TrackView */,
 				015F09FF1BCFEBFF00CA9E3D /* ClearView.h */,
 				015F0A001BCFEBFF00CA9E3D /* ClearView.m */,
 			);
@@ -260,7 +247,6 @@
 			files = (
 				015F0A011BCFEBFF00CA9E3D /* ClearView.m in Sources */,
 				01C688631BCF98C400DB7828 /* ViewController.m in Sources */,
-				015F09FD1BCFE8A300CA9E3D /* TrackView.m in Sources */,
 				01C688601BCF98C400DB7828 /* AppDelegate.m in Sources */,
 				015F09FA1BCFE88400CA9E3D /* TrackCircleView.m in Sources */,
 				015F09F71BCFE86B00CA9E3D /* SliderCircleView.m in Sources */,

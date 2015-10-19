@@ -7,7 +7,6 @@
 //
 
 #import "StepSlider.h"
-#import "TrackView.h"
 #import "TrackCircleView.h"
 #import "SliderCircleView.h"
 
@@ -25,9 +24,9 @@
 
 @interface StepSlider ()
 {
-    TrackView *_trackView;
+    CAShapeLayer     *_trackLayer;
     SliderCircleView *_sliderView;
-    NSMutableArray *_trackCirclesArray;
+    NSMutableArray   *_trackCirclesArray;
 }
 
 @end
@@ -64,10 +63,10 @@
 - (void)generalSetup
 {
     _trackCirclesArray = [[NSMutableArray alloc] init];
-    _trackView   = [[TrackView alloc] init];
-    _sliderView  = [[SliderCircleView alloc] init];
-    _trackView.sliderView = _sliderView.sliderView = self;
-    [self addSubview:_trackView];
+    _trackLayer = [CAShapeLayer layer];
+    _sliderView = [[SliderCircleView alloc] init];
+    _sliderView.sliderView = self;
+    [self.layer addSublayer:_trackLayer];
     [self addSubview:_sliderView];
     
     self.maxCount           = 4;
@@ -98,11 +97,16 @@
                                    sliderFrameSide);
     [_sliderView setNeedsDisplay];
     
-    _trackView.frame = CGRectMake(contentFrame.origin.x,
+    
+    _trackLayer.frame = CGRectMake(contentFrame.origin.x,
                                   (contentFrame.size.height - self.trackHeight) / 2.f,
                                   contentFrame.size.width,
                                   self.trackHeight);
-    [_trackView setNeedsDisplay];
+    
+    _trackLayer.path         = [UIBezierPath bezierPathWithRect:_trackLayer.bounds].CGPath;
+    _trackLayer.fillColor    = [self.trackColor CGColor];
+    _trackLayer.lineWidth    = 0.f;
+    _trackLayer.strokeEnd    = 1.f;
     
     if (_trackCirclesArray.count > self.maxCount) {
         NSArray *circlesToDelete = [_trackCirclesArray subarrayWithRange:NSMakeRange(self.maxCount - 1, _trackCirclesArray.count - self.maxCount)];
@@ -146,7 +150,7 @@
 
 - (CGFloat)indexCalculate
 {
-    return [self sliderPosition] / (_trackView.bounds.size.width / (self.maxCount - 1));
+    return [self sliderPosition] / (_trackLayer.bounds.size.width / (self.maxCount - 1));
 }
 
 #pragma mark - Touches
@@ -163,7 +167,6 @@
     CGFloat limitedPosition = fminf(fmaxf(position, maxRadius), self.bounds.size.width - maxRadius);
     
     _sliderView.center = CGPointMake(limitedPosition, _sliderView.center.y);
-    [_trackView setNeedsDisplay];
     
     NSUInteger index = [self indexCalculate];
     if (_index != index) {
