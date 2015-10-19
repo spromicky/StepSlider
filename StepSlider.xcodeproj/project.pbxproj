@@ -9,7 +9,6 @@
 /* Begin PBXBuildFile section */
 		015F09E91BCFA11F00CA9E3D /* QuartzCore.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 015F09E81BCFA11F00CA9E3D /* QuartzCore.framework */; };
 		015F09F41BCFE4E000CA9E3D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 015F09F31BCFE4E000CA9E3D /* Assets.xcassets */; settings = {ASSET_TAGS = (); }; };
-		015F09F71BCFE86B00CA9E3D /* SliderCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 015F09F61BCFE86B00CA9E3D /* SliderCircleView.m */; settings = {ASSET_TAGS = (); }; };
 		015F09FA1BCFE88400CA9E3D /* TrackCircleView.m in Sources */ = {isa = PBXBuildFile; fileRef = 015F09F91BCFE88400CA9E3D /* TrackCircleView.m */; settings = {ASSET_TAGS = (); }; };
 		015F0A011BCFEBFF00CA9E3D /* ClearView.m in Sources */ = {isa = PBXBuildFile; fileRef = 015F0A001BCFEBFF00CA9E3D /* ClearView.m */; settings = {ASSET_TAGS = (); }; };
 		01C6885D1BCF98C400DB7828 /* main.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C6885C1BCF98C400DB7828 /* main.m */; };
@@ -23,8 +22,6 @@
 /* Begin PBXFileReference section */
 		015F09E81BCFA11F00CA9E3D /* QuartzCore.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = QuartzCore.framework; path = System/Library/Frameworks/QuartzCore.framework; sourceTree = SDKROOT; };
 		015F09F31BCFE4E000CA9E3D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
-		015F09F51BCFE86B00CA9E3D /* SliderCircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = SliderCircleView.h; sourceTree = "<group>"; };
-		015F09F61BCFE86B00CA9E3D /* SliderCircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = SliderCircleView.m; sourceTree = "<group>"; };
 		015F09F81BCFE88400CA9E3D /* TrackCircleView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = TrackCircleView.h; sourceTree = "<group>"; };
 		015F09F91BCFE88400CA9E3D /* TrackCircleView.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = TrackCircleView.m; sourceTree = "<group>"; };
 		015F09FF1BCFEBFF00CA9E3D /* ClearView.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = ClearView.h; sourceTree = "<group>"; };
@@ -54,15 +51,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		015F09E41BCFA0EA00CA9E3D /* SliderCircleView */ = {
-			isa = PBXGroup;
-			children = (
-				015F09F51BCFE86B00CA9E3D /* SliderCircleView.h */,
-				015F09F61BCFE86B00CA9E3D /* SliderCircleView.m */,
-			);
-			path = SliderCircleView;
-			sourceTree = "<group>";
-		};
 		015F09EA1BCFA14C00CA9E3D /* Frameworks */ = {
 			isa = PBXGroup;
 			children = (
@@ -83,7 +71,6 @@
 		015F09FE1BCFEBEB00CA9E3D /* ClearView */ = {
 			isa = PBXGroup;
 			children = (
-				015F09E41BCFA0EA00CA9E3D /* SliderCircleView */,
 				015F09EF1BCFA7D700CA9E3D /* TrackCircleView */,
 				015F09FF1BCFEBFF00CA9E3D /* ClearView.h */,
 				015F0A001BCFEBFF00CA9E3D /* ClearView.m */,
@@ -249,7 +236,6 @@
 				01C688631BCF98C400DB7828 /* ViewController.m in Sources */,
 				01C688601BCF98C400DB7828 /* AppDelegate.m in Sources */,
 				015F09FA1BCFE88400CA9E3D /* TrackCircleView.m in Sources */,
-				015F09F71BCFE86B00CA9E3D /* SliderCircleView.m in Sources */,
 				01C688751BCF995F00DB7828 /* StepSlider.m in Sources */,
 				01C6885D1BCF98C400DB7828 /* main.m in Sources */,
 			);

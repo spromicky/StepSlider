@@ -8,7 +8,6 @@
 
 #import "StepSlider.h"
 #import "TrackCircleView.h"
-#import "SliderCircleView.h"
 
 #define GENERATE_ACCESS(PROPERTY, LAYER_PROPERTY, TYPE, SETTER, GETTER, UPDATER) \
 - (void)SETTER:(TYPE)PROPERTY { \
@@ -25,7 +24,7 @@
 @interface StepSlider ()
 {
     CAShapeLayer     *_trackLayer;
-    SliderCircleView *_sliderView;
+    CAShapeLayer     *_sliderCircleLayer;
     NSMutableArray   *_trackCirclesArray;
 }
 
@@ -64,13 +63,12 @@
 {
     _trackCirclesArray = [[NSMutableArray alloc] init];
     _trackLayer = [CAShapeLayer layer];
-
+    _sliderCircleLayer = [CAShapeLayer layer];
     
+    
+    [self.layer addSublayer:_sliderCircleLayer];
     [self.layer addSublayer:_trackLayer];
     
-    _sliderView = [[SliderCircleView alloc] init];
-    _sliderView.sliderView = self;
-    [self addSubview:_sliderView];
     
     self.maxCount           = 4;
     self.index              = 2;
@@ -89,23 +87,22 @@
     
     CGRect contentFrame = CGRectMake([self maxRadius], 0.f, self.bounds.size.width - 2 * [self maxRadius], self.bounds.size.height);
     
-    CGFloat stepWidth            = contentFrame.size.width / (self.maxCount - 1);
-    CGFloat circleY              = contentFrame.size.height / 2.f - self.trackCircleRadius;
-    CGFloat circleFrameSide      = self.trackCircleRadius * 2.f;
-    
+    CGFloat stepWidth       = contentFrame.size.width / (self.maxCount - 1);
+    CGFloat circleY         = contentFrame.size.height / 2.f - self.trackCircleRadius;
+    CGFloat circleFrameSide = self.trackCircleRadius * 2.f;
     CGFloat sliderFrameSide = self.sliderCircleRadius * 2.f;
-    _sliderView.frame = CGRectMake(contentFrame.origin.x + stepWidth * self.index - self.sliderCircleRadius,
-                                   contentFrame.size.height / 2.f - self.sliderCircleRadius,
-                                   sliderFrameSide,
-                                   sliderFrameSide);
-    [_sliderView setNeedsDisplay];
+    
+    _sliderCircleLayer.frame     = CGRectMake(0.f, 0.f, sliderFrameSide, sliderFrameSide);
+    _sliderCircleLayer.path      = [UIBezierPath bezierPathWithRoundedRect:_sliderCircleLayer.bounds cornerRadius:sliderFrameSide / 2].CGPath;
+    _sliderCircleLayer.lineWidth = 0.f;
+    _sliderCircleLayer.fillColor = [self.sliderCircleColor CGColor];
+    _sliderCircleLayer.position  = CGPointMake(contentFrame.origin.x + stepWidth * self.index , contentFrame.size.height / 2.f);
     
     
     _trackLayer.frame = CGRectMake(contentFrame.origin.x,
-                                             (contentFrame.size.height - self.trackHeight) / 2.f,
-                                             contentFrame.size.width,
-                                             self.trackHeight);
-    
+                                   (contentFrame.size.height - self.trackHeight) / 2.f,
+                                   contentFrame.size.width,
+                                   self.trackHeight);    
     _trackLayer.path            = [self fillingPath];
     _trackLayer.backgroundColor = [self.trackColor CGColor];
     _trackLayer.lineWidth       = 0.f;
@@ -139,7 +136,8 @@
         [trackCircle setNeedsDisplay];
     }
     
-    [self bringSubviewToFront:_sliderView];
+    [_sliderCircleLayer removeFromSuperlayer];
+    [self.layer addSublayer:_sliderCircleLayer];
 }
 
 - (CGPathRef)fillingPath
@@ -157,7 +155,7 @@
 
 - (CGFloat)sliderPosition
 {
-    return _sliderView.center.x - [self maxRadius];
+    return _sliderCircleLayer.position.x - [self maxRadius];
 }
 
 - (CGFloat)indexCalculate
@@ -169,7 +167,7 @@
 
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    return CGRectContainsPoint(_sliderView.frame, [touch locationInView:self]);
+    return CGRectContainsPoint(_sliderCircleLayer.frame, [touch locationInView:self]);
 }
 
 - (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
@@ -178,7 +176,11 @@
     CGFloat position = [touch locationInView:self].x;
     CGFloat limitedPosition = fminf(fmaxf(position, maxRadius), self.bounds.size.width - maxRadius);
     
-    _sliderView.center = CGPointMake(limitedPosition, _sliderView.center.y);
+    [CATransaction begin];
+    [CATransaction setValue: (id) kCFBooleanTrue forKey: kCATransactionDisableActions];
+    _sliderCircleLayer.position = CGPointMake(limitedPosition, _sliderCircleLayer.position.y);
+    [CATransaction commit];
+    
     _trackLayer.path = [self fillingPath];
     
     NSUInteger index = [self indexCalculate];
@@ -196,9 +198,7 @@
 - (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
     self.index = roundf([self indexCalculate]);
-    [UIView animateWithDuration:0.3f animations:^{
-        [self setNeedsLayout];
-    }];
+    [self setNeedsLayout];
 }
 
 #pragma mark - Access methods
