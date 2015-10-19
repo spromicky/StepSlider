@@ -68,8 +68,8 @@
     [self.layer addSublayer:_sliderCircleLayer];
     [self.layer addSublayer:_trackLayer];
     
-    self.maxCount           = 4;
-    self.index              = 2;
+    self.maxCount           = 2;
+    self.index              = 1;
     self.trackHeight        = 4.f;
     self.trackCircleRadius  = 5.f;
     self.sliderCircleRadius = 12.5f;
@@ -200,6 +200,11 @@
 - (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
     self.index = roundf([self indexCalculate]);
+    
+    CABasicAnimation *basicAnimation = [CABasicAnimation animationWithKeyPath:@"path"];
+    basicAnimation.duration = [CATransaction animationDuration];
+    [_trackLayer addAnimation:basicAnimation forKey:@"somekey"];
+    
     [self setNeedsLayout];
 }
 
