@@ -16,6 +16,8 @@
     } \
 }
 
+static NSString * const kTrackAnimation = @"kTrackAnimation";
+
 typedef void (^withoutAnimationBlock)(void);
 void withoutCAAnimation(withoutAnimationBlock code)
 {
@@ -24,8 +26,6 @@ void withoutCAAnimation(withoutAnimationBlock code)
     code();
     [CATransaction commit];
 }
-
-static NSString * const kTrackAnimation       = @"kTrackAnimation";
 
 @interface StepSlider ()
 {
@@ -148,14 +148,15 @@ static NSString * const kTrackAnimation       = @"kTrackAnimation";
             trackCircle = _trackCirclesArray[i];
         } else {
             trackCircle       = [CAShapeLayer layer];
-            trackCircle.frame = CGRectMake(0.f, 0.f, circleFrameSide, circleFrameSide);
-            trackCircle.path  = [UIBezierPath bezierPathWithRoundedRect:trackCircle.bounds cornerRadius:circleFrameSide / 2].CGPath;
 
             [self.layer addSublayer:trackCircle];
             [_trackCirclesArray addObject:trackCircle];
         }
         
+        trackCircle.frame    = CGRectMake(0.f, 0.f, circleFrameSide, circleFrameSide);
+        trackCircle.path     = [UIBezierPath bezierPathWithRoundedRect:trackCircle.bounds cornerRadius:circleFrameSide / 2].CGPath;
         trackCircle.position = CGPointMake(contentFrame.origin.x + stepWidth * i, contentFrame.size.height / 2.f);
+        
         if (animated) {
             CGColorRef newColor = [self trackCircleColor:trackCircle];
             CGColorRef oldColor = trackCircle.fillColor;
@@ -305,16 +306,16 @@ static NSString * const kTrackAnimation       = @"kTrackAnimation";
     }
 }
 
-- (void)setTrackCircleRadius:(CGFloat)trackCircleRadius
+- (void)setTintColor:(UIColor *)tintColor
 {
-    if (_trackCircleRadius != trackCircleRadius) {
-        _trackCircleRadius = fmaxf(1.f, trackCircleRadius);
-        [self setNeedsLayout];
-    }
+    [super setTintColor:tintColor];
+    [self setNeedsLayout];
 }
 
 GENERATE_SETTER(trackHeight, CGFloat, setTrackHeight);
-GENERATE_SETTER(sliderCircleRadius, CGFloat, setSliderCircleRadius);
 GENERATE_SETTER(trackColor, UIColor*, setTrackColor);
+GENERATE_SETTER(trackCircleRadius, CGFloat, setTrackCircleRadius);
+GENERATE_SETTER(sliderCircleRadius, CGFloat, setSliderCircleRadius);
 GENERATE_SETTER(sliderCircleColor, UIColor*, setSliderCircleColor);
+
 @end
