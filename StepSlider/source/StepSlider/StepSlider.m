@@ -198,7 +198,7 @@ static NSString * const kTrackAnimation       = @"kTrackAnimation";
  */
 - (CGFloat)diff
 {
-    return sqrtf(powf(self.trackCircleRadius, 2.f) - pow(self.trackHeight / 2.f, 2.f));
+    return sqrtf(fmaxf(0.f, powf(self.trackCircleRadius, 2.f) - pow(self.trackHeight / 2.f, 2.f)));
 }
 
 - (CGPathRef)fillingPath
