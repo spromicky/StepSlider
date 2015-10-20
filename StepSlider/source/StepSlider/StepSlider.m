@@ -93,7 +93,6 @@ static NSString * const kTrackAnimation       = @"kTrackAnimation";
     CGRect contentFrame = CGRectMake(self.maxRadius, 0.f, self.bounds.size.width - 2 * self.maxRadius, self.bounds.size.height);
     
     CGFloat stepWidth       = contentFrame.size.width / (self.maxCount - 1);
-    CGFloat circleY         = contentFrame.size.height / 2.f - self.trackCircleRadius;
     CGFloat circleFrameSide = self.trackCircleRadius * 2.f;
     CGFloat sliderFrameSide = self.sliderCircleRadius * 2.f;
     
@@ -134,31 +133,29 @@ static NSString * const kTrackAnimation       = @"kTrackAnimation";
 
     
     if (_trackCirclesArray.count > self.maxCount) {
-        NSArray *circlesToDelete = [_trackCirclesArray subarrayWithRange:NSMakeRange(self.maxCount - 1, _trackCirclesArray.count - self.maxCount)];
         
-        for (CAShapeLayer *trackCircle in circlesToDelete) {
-            [trackCircle removeFromSuperlayer];
+        for (NSUInteger i = self.maxCount; i < _trackCirclesArray.count; i++) {
+            [_trackCirclesArray[i] removeFromSuperlayer];
         }
+        
+        _trackCirclesArray = [[_trackCirclesArray subarrayWithRange:NSMakeRange(0, self.maxCount)] mutableCopy];
     }
     
     for (NSUInteger i = 0; i < self.maxCount; i++) {
         CAShapeLayer *trackCircle;
         
-        CGFloat trackCircleX = stepWidth * i - self.trackCircleRadius;
-        CGRect  trackCircleFrame = CGRectMake(contentFrame.origin.x + trackCircleX, circleY, circleFrameSide, circleFrameSide);
-        
         if (i < _trackCirclesArray.count) {
-            trackCircle       = _trackCirclesArray[i];
-            trackCircle.frame = trackCircleFrame;
+            trackCircle = _trackCirclesArray[i];
         } else {
             trackCircle       = [CAShapeLayer layer];
-            trackCircle.frame = trackCircleFrame;
+            trackCircle.frame = CGRectMake(0.f, 0.f, circleFrameSide, circleFrameSide);
             trackCircle.path  = [UIBezierPath bezierPathWithRoundedRect:trackCircle.bounds cornerRadius:circleFrameSide / 2].CGPath;
 
             [self.layer addSublayer:trackCircle];
             [_trackCirclesArray addObject:trackCircle];
         }
         
+        trackCircle.position = CGPointMake(contentFrame.origin.x + stepWidth * i, contentFrame.size.height / 2.f);
         if (animated) {
             CGColorRef newColor = [self trackCircleColor:trackCircle];
             CGColorRef oldColor = trackCircle.fillColor;
@@ -296,8 +293,14 @@ static NSString * const kTrackAnimation       = @"kTrackAnimation";
 - (void)setMaxCount:(NSUInteger)maxCount
 {
     if (_maxCount != maxCount) {
-        _index = MIN(_index, maxCount);
         _maxCount = maxCount;
+        
+        NSUInteger index = MIN(_index, maxCount - 1);
+        if (_index != index) {
+            _index = index;
+            [self sendActionsForControlEvents:UIControlEventValueChanged];
+        }
+        
         [self setNeedsLayout];
     }
 }

@@ -27,10 +27,10 @@
                                 </constraints>
                                 <userDefinedRuntimeAttributes>
                                     <userDefinedRuntimeAttribute type="number" keyPath="maxCount">
-                                        <integer key="value" value="5"/>
+                                        <integer key="value" value="8"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="index">
-                                        <integer key="value" value="2"/>
+                                        <integer key="value" value="7"/>
                                     </userDefinedRuntimeAttribute>
                                     <userDefinedRuntimeAttribute type="number" keyPath="trackHeight">
                                         <real key="value" value="4"/>
