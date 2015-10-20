@@ -33,6 +33,8 @@ static NSString * const kTrackAnimation = @"kTrackAnimation";
 
 @implementation StepSlider
 
+#pragma mark - Init
+
 - (instancetype)init
 {
     self = [super init];
@@ -83,7 +85,7 @@ static NSString * const kTrackAnimation = @"kTrackAnimation";
 {
     [super layoutSubviews];
     
-    CGRect contentFrame = CGRectMake([self maxRadius], 0.f, self.bounds.size.width - 2 * [self maxRadius], self.bounds.size.height);
+    CGRect contentFrame = CGRectMake(self.maxRadius, 0.f, self.bounds.size.width - 2 * self.maxRadius, self.bounds.size.height);
     
     CGFloat stepWidth       = contentFrame.size.width / (self.maxCount - 1);
     CGFloat circleY         = contentFrame.size.height / 2.f - self.trackCircleRadius;
@@ -138,10 +140,19 @@ static NSString * const kTrackAnimation = @"kTrackAnimation";
     [self.layer addSublayer:_sliderCircleLayer];
 }
 
+#pragma mark - Helpers
+/*
+ Calculate distance from trackCircle center to point where circle cross track line.
+ */
+- (CGFloat)diff
+{
+    return sqrtf(powf(self.trackCircleRadius, 2.f) - pow(self.trackHeight / 2.f, 2.f));
+}
+
 - (CGPathRef)fillingPath
 {
     CGRect fillRect     = _trackLayer.bounds;
-    fillRect.size.width = [self sliderPosition];
+    fillRect.size.width = self.sliderPosition;
     
     return [UIBezierPath bezierPathWithRect:fillRect].CGPath;
 }
@@ -153,17 +164,22 @@ static NSString * const kTrackAnimation = @"kTrackAnimation";
 
 - (CGFloat)sliderPosition
 {
-    return _sliderCircleLayer.position.x - [self maxRadius];
+    return _sliderCircleLayer.position.x - self.maxRadius;
+}
+
+- (CGFloat)trackCirclePosition:(CAShapeLayer *)trackCircle
+{
+    return trackCircle.position.x - self.maxRadius;
 }
 
 - (CGFloat)indexCalculate
 {
-    return [self sliderPosition] / (_trackLayer.bounds.size.width / (self.maxCount - 1));
+    return self.sliderPosition / (_trackLayer.bounds.size.width / (self.maxCount - 1));
 }
 
 - (CGColorRef)trackCircleColor:(CAShapeLayer *)trackCircle
 {
-    return self.sliderPosition >= trackCircle.position.x - self.maxRadius ? self.tintColor.CGColor : self.trackColor.CGColor;
+    return self.sliderPosition + [self diff] >= [self trackCirclePosition:trackCircle] ? self.tintColor.CGColor : self.trackColor.CGColor;
 }
 
 #pragma mark - Touches
@@ -175,9 +191,8 @@ static NSString * const kTrackAnimation = @"kTrackAnimation";
 
 - (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    CGFloat maxRadius = fmaxf(self.trackCircleRadius, self.sliderCircleRadius);
     CGFloat position = [touch locationInView:self].x;
-    CGFloat limitedPosition = fminf(fmaxf(position, maxRadius), self.bounds.size.width - maxRadius);
+    CGFloat limitedPosition = fminf(fmaxf(position, self.maxRadius), self.bounds.size.width - self.maxRadius);
     
     [CATransaction begin];
     [CATransaction setValue: (id) kCFBooleanTrue forKey: kCATransactionDisableActions];
@@ -185,7 +200,7 @@ static NSString * const kTrackAnimation = @"kTrackAnimation";
     _sliderCircleLayer.position = CGPointMake(limitedPosition, _sliderCircleLayer.position.y);
     _trackLayer.path = [self fillingPath];
     
-    NSUInteger index = [self indexCalculate];
+    NSUInteger index = (self.sliderPosition + [self diff]) / (_trackLayer.bounds.size.width / (self.maxCount - 1));
     if (_index != index) {
         for (CAShapeLayer *trackCircle in _trackCirclesArray) {
             trackCircle.fillColor = [self trackCircleColor:trackCircle];
@@ -201,7 +216,12 @@ static NSString * const kTrackAnimation = @"kTrackAnimation";
 
 - (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    self.index = roundf([self indexCalculate]);
+    NSUInteger oldIndex = _index;
+    _index = roundf([self indexCalculate]);
+    
+    if (oldIndex != _index) {
+        [self sendActionsForControlEvents:UIControlEventValueChanged];
+    }
     
     CABasicAnimation *basicAnimation = [CABasicAnimation animationWithKeyPath:@"path"];
     basicAnimation.duration = [CATransaction animationDuration];
@@ -214,7 +234,7 @@ static NSString * const kTrackAnimation = @"kTrackAnimation";
 
 - (void)setIndex:(NSUInteger)index
 {
-    NSString *error = [NSString stringWithFormat:@"Index %i beyond bounds [0 .. %i]", index, self.maxCount];
+    NSString *error = [NSString stringWithFormat:@"Index %lu beyond bounds [0 .. %lu]", (unsigned long)index, (unsigned long)self.maxCount];
     NSAssert((index < self.maxCount), error);
     
     if (_index != index) {

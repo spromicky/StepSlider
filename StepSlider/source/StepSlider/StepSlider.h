@@ -12,15 +12,15 @@ IB_DESIGNABLE
 
 @interface StepSlider : UIControl
 
-@property (nonatomic) NSUInteger maxCount;
-@property (nonatomic) NSUInteger index;
+@property (nonatomic) IBInspectable NSUInteger maxCount;
+@property (nonatomic) IBInspectable NSUInteger index;
 
-@property (nonatomic) CGFloat trackHeight;
-@property (nonatomic) CGFloat trackCircleRadius;
-@property (nonatomic) CGFloat sliderCircleRadius;
+@property (nonatomic) IBInspectable CGFloat trackHeight;
+@property (nonatomic) IBInspectable CGFloat trackCircleRadius;
+@property (nonatomic) IBInspectable CGFloat sliderCircleRadius;
 
-@property (nonatomic, strong) UIColor *trackColor;
-@property (nonatomic, strong) UIColor *sliderCircleColor;
+@property (nonatomic, strong) IBInspectable UIColor *trackColor;
+@property (nonatomic, strong) IBInspectable UIColor *sliderCircleColor;
 
 - (CGFloat)sliderPosition;
 - (CGFloat)maxRadius;

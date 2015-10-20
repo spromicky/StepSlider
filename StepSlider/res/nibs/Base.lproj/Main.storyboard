@@ -16,29 +16,71 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <view clipsSubviews="YES" contentMode="scaleToFill" ambiguous="YES" misplaced="YES" translatesAutoresizingMaskIntoConstraints="NO" id="dNa-lq-0iy" customClass="StepSlider">
+                            <view clipsSubviews="YES" contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dNa-lq-0iy" customClass="StepSlider">
                                 <rect key="frame" x="180" y="58" width="240" height="30"/>
                                 <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" red="0.2137643914" green="0.73483758219999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="240" id="09d-NM-q4f"/>
+                                    <constraint firstAttribute="height" constant="30" id="lVo-PK-vne"/>
+                                </constraints>
+                                <userDefinedRuntimeAttributes>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="maxCount">
+                                        <integer key="value" value="3"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="index">
+                                        <integer key="value" value="1"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="trackHeight">
+                                        <real key="value" value="12"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="trackCircleRadius">
+                                        <real key="value" value="10"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="number" keyPath="sliderCircleRadius">
+                                        <real key="value" value="4"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="trackColor">
+                                        <color key="value" red="0.41176470588235292" green="0.41176470588235292" blue="0.41176470588235292" alpha="1" colorSpace="calibratedRGB"/>
+                                    </userDefinedRuntimeAttribute>
+                                    <userDefinedRuntimeAttribute type="color" keyPath="sliderCircleColor">
+                                        <color key="value" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                    </userDefinedRuntimeAttribute>
+                                </userDefinedRuntimeAttributes>
                                 <connections>
                                     <action selector="changeValue:" destination="BYZ-38-t0r" eventType="valueChanged" id="lGe-Au-Brq"/>
                                 </connections>
                             </view>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KDz-eV-f0y">
+                                <rect key="frame" x="180" y="111" width="240" height="21"/>
+                                <animations/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="21" id="BCC-mi-iIc"/>
+                                    <constraint firstAttribute="width" constant="240" id="NHV-de-Sem"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <nil key="highlightedColor"/>
+                            </label>
                         </subviews>
                         <animations/>
                         <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
-                            <constraint firstItem="dNa-lq-0iy" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="gUp-hj-U90"/>
-                            <constraint firstItem="dNa-lq-0iy" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="s6e-VT-AFC"/>
+                            <constraint firstItem="KDz-eV-f0y" firstAttribute="top" secondItem="dNa-lq-0iy" secondAttribute="bottom" constant="23" id="6U4-gh-3zH"/>
+                            <constraint firstItem="dNa-lq-0iy" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="h2u-MW-E6t"/>
+                            <constraint firstItem="KDz-eV-f0y" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="rpT-7c-Tdy"/>
+                            <constraint firstItem="dNa-lq-0iy" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="38" id="vEx-5n-x5m"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="label" destination="KDz-eV-f0y" id="Cms-Af-bjf"/>
                         <outlet property="sliderView" destination="dNa-lq-0iy" id="djU-DK-CQ7"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="325" y="385"/>
         </scene>
     </scenes>
 </document>

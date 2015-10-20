@@ -13,19 +13,13 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(2 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.sliderView.index = 7;
-    });
-    
-    dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(4 * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
-        self.sliderView.index = 0;
-    });
+
+    [self.label setText:[NSString stringWithFormat:@"%lu", (unsigned long)self.sliderView.index]];
 }
 
 - (IBAction)changeValue:(StepSlider *)sender
 {
-    NSLog(@"index: %i", sender.index);
+    [self.label setText:[NSString stringWithFormat:@"%lu", (unsigned long)sender.index]];
 }
 
 @end
