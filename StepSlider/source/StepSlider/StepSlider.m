@@ -8,16 +8,12 @@
 
 #import "StepSlider.h"
 
-#define GENERATE_ACCESS(PROPERTY, LAYER_PROPERTY, TYPE, SETTER, GETTER, UPDATER) \
+#define GENERATE_SETTER(PROPERTY, TYPE, SETTER) \
 - (void)SETTER:(TYPE)PROPERTY { \
-    if (LAYER_PROPERTY != PROPERTY) { \
-        LAYER_PROPERTY = PROPERTY; \
-        [self UPDATER]; \
+    if (_##PROPERTY != PROPERTY) { \
+        _##PROPERTY = PROPERTY; \
+        [self setNeedsLayout]; \
     } \
-} \
-\
-- (TYPE)GETTER { \
-    return LAYER_PROPERTY; \
 }
 
 typedef void (^withoutAnimationBlock)(void);
@@ -30,7 +26,6 @@ void withoutCAAnimation(withoutAnimationBlock code)
 }
 
 static NSString * const kTrackAnimation       = @"kTrackAnimation";
-static NSString * const kTrackCircleAnimation = @"kTrackCircleAnimation";
 
 @interface StepSlider ()
 {
@@ -102,26 +97,24 @@ static NSString * const kTrackCircleAnimation = @"kTrackCircleAnimation";
     CGFloat circleFrameSide = self.trackCircleRadius * 2.f;
     CGFloat sliderFrameSide = self.sliderCircleRadius * 2.f;
     
-    void (^sliderBlock)(void) = ^void(void) {
-        _sliderCircleLayer.frame     = CGRectMake(0.f, 0.f, sliderFrameSide, sliderFrameSide);
-        _sliderCircleLayer.path      = [UIBezierPath bezierPathWithRoundedRect:_sliderCircleLayer.bounds cornerRadius:sliderFrameSide / 2].CGPath;
-        _sliderCircleLayer.fillColor = [self.sliderCircleColor CGColor];
-        _sliderCircleLayer.position  = CGPointMake(contentFrame.origin.x + stepWidth * self.index , contentFrame.size.height / 2.f);
-    };
+    CGPoint oldPosition = _sliderCircleLayer.position;
+    CGPathRef oldPath   = _trackLayer.path;
     
-    if (animated) {
-        sliderBlock();
-    } else {
-        withoutCAAnimation(^{
-            sliderBlock();
-        });
+    if (!animated) {
+        [CATransaction begin];
+        [CATransaction setValue: (id) kCFBooleanTrue forKey: kCATransactionDisableActions];
     }
     
+    _sliderCircleLayer.frame     = CGRectMake(0.f, 0.f, sliderFrameSide, sliderFrameSide);
+    _sliderCircleLayer.path      = [UIBezierPath bezierPathWithRoundedRect:_sliderCircleLayer.bounds cornerRadius:sliderFrameSide / 2].CGPath;
+    _sliderCircleLayer.fillColor = [self.sliderCircleColor CGColor];
+    _sliderCircleLayer.position  = CGPointMake(contentFrame.origin.x + stepWidth * self.index , contentFrame.size.height / 2.f);
     
     if (animated) {
-        CABasicAnimation *basicAnimation = [CABasicAnimation animationWithKeyPath:@"path"];
-        basicAnimation.duration = [CATransaction animationDuration];
-        [_trackLayer addAnimation:basicAnimation forKey:kTrackAnimation];
+        CABasicAnimation *basicSliderAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
+        basicSliderAnimation.duration = [CATransaction animationDuration];
+        basicSliderAnimation.fromValue = [NSValue valueWithCGPoint:(oldPosition)];
+        [_sliderCircleLayer addAnimation:basicSliderAnimation forKey:@"position"];
     }
     
     _trackLayer.frame = CGRectMake(contentFrame.origin.x,
@@ -131,6 +124,13 @@ static NSString * const kTrackCircleAnimation = @"kTrackCircleAnimation";
     _trackLayer.path            = [self fillingPath];
     _trackLayer.backgroundColor = [self.trackColor CGColor];
     _trackLayer.fillColor       = [self.tintColor CGColor];
+    
+    if (animated) {
+        CABasicAnimation *basicTrackAnimation = [CABasicAnimation animationWithKeyPath:@"path"];
+        basicTrackAnimation.duration = [CATransaction animationDuration];
+        basicTrackAnimation.fromValue = (__bridge id _Nullable)(oldPath);
+        [_trackLayer addAnimation:basicTrackAnimation forKey:@"path"];
+    }
 
     
     if (_trackCirclesArray.count > self.maxCount) {
@@ -160,19 +160,27 @@ static NSString * const kTrackCircleAnimation = @"kTrackCircleAnimation";
         }
         
         if (animated) {
-            CABasicAnimation *basicTrackCircleAnimation = [CABasicAnimation animationWithKeyPath:@"fillColor"];
-            basicTrackCircleAnimation.duration = [CATransaction animationDuration] / 2.f;
-            basicTrackCircleAnimation.beginTime = CACurrentMediaTime() + [CATransaction animationDuration];
-            basicTrackCircleAnimation.toValue = (__bridge id _Nullable)([self trackCircleColor:trackCircle]);
-            basicTrackCircleAnimation.fillMode = kCAFillModeForwards;
-            basicTrackCircleAnimation.removedOnCompletion = NO;
-            [trackCircle addAnimation:basicTrackCircleAnimation forKey:kTrackCircleAnimation];
+            CGColorRef newColor = [self trackCircleColor:trackCircle];
+            CGColorRef oldColor = trackCircle.fillColor;
+            
+            if (!CGColorEqualToColor(newColor, trackCircle.fillColor)) {
+                
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)([CATransaction animationDuration] * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                    trackCircle.fillColor = newColor;
+                    CABasicAnimation *basicTrackCircleAnimation = [CABasicAnimation animationWithKeyPath:@"fillColor"];
+                    basicTrackCircleAnimation.duration = [CATransaction animationDuration] / 2.f;
+                    basicTrackCircleAnimation.fromValue = (__bridge id _Nullable)(oldColor);
+                    [trackCircle addAnimation:basicTrackCircleAnimation forKey:@"fillColor"];
+                });
+            }
         } else {
-            withoutCAAnimation(^{
-                trackCircle.fillColor = [self trackCircleColor:trackCircle];
-            });
+            trackCircle.fillColor = [self trackCircleColor:trackCircle];
         }
         
+    }
+    
+    if (!animated) {
+        [CATransaction commit];
     }
     
     [_sliderCircleLayer removeFromSuperlayer];
@@ -248,7 +256,6 @@ static NSString * const kTrackCircleAnimation = @"kTrackCircleAnimation";
         NSUInteger index = (self.sliderPosition + [self diff]) / (_trackLayer.bounds.size.width / (self.maxCount - 1));
         if (_index != index) {
             for (CAShapeLayer *trackCircle in _trackCirclesArray) {
-                [trackCircle removeAllAnimations];
                 trackCircle.fillColor = [self trackCircleColor:trackCircle];
             }
             _index = index;
@@ -286,4 +293,25 @@ static NSString * const kTrackCircleAnimation = @"kTrackCircleAnimation";
     }
 }
 
+- (void)setMaxCount:(NSUInteger)maxCount
+{
+    if (_maxCount != maxCount) {
+        _index = MIN(_index, maxCount);
+        _maxCount = maxCount;
+        [self setNeedsLayout];
+    }
+}
+
+- (void)setTrackCircleRadius:(CGFloat)trackCircleRadius
+{
+    if (_trackCircleRadius != trackCircleRadius) {
+        _trackCircleRadius = fmaxf(1.f, trackCircleRadius);
+        [self setNeedsLayout];
+    }
+}
+
+GENERATE_SETTER(trackHeight, CGFloat, setTrackHeight);
+GENERATE_SETTER(sliderCircleRadius, CGFloat, setSliderCircleRadius);
+GENERATE_SETTER(trackColor, UIColor*, setTrackColor);
+GENERATE_SETTER(sliderCircleColor, UIColor*, setSliderCircleColor);
 @end

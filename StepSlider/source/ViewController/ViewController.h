@@ -16,5 +16,14 @@
 
 - (IBAction)changeValue:(StepSlider *)sender;
 
+- (IBAction)changeIndex:(id)sender;
+- (IBAction)changeMaxIndex:(id)sender;
+- (IBAction)changeTintColor:(id)sender;
+- (IBAction)changeSliderCircleColor:(id)sender;
+- (IBAction)changeSliderCircleRadius:(id)sender;
+- (IBAction)changeTrackColor:(id)sender;
+- (IBAction)changeTrackCircleRaidus:(id)sender;
+- (IBAction)changeTrackHeight:(id)sender;
+
 @end
 
