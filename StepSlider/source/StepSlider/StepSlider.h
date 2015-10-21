@@ -22,7 +22,4 @@ IB_DESIGNABLE
 @property (nonatomic, strong) IBInspectable UIColor *trackColor;
 @property (nonatomic, strong) IBInspectable UIColor *sliderCircleColor;
 
-- (CGFloat)sliderPosition;
-- (CGFloat)maxRadius;
-
 @end
