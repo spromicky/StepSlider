@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="8191" systemVersion="15A284" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9059" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="8154"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9049"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -91,7 +91,7 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HqD-eV-ahe">
-                                        <rect key="frame" x="62" y="38" width="46" height="30"/>
+                                        <rect key="frame" x="8" y="38" width="46" height="30"/>
                                         <animations/>
                                         <state key="normal" title="TC"/>
                                         <connections>
@@ -107,19 +107,11 @@
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ho3-LO-mVi">
-                                        <rect key="frame" x="8" y="38" width="46" height="30"/>
+                                        <rect key="frame" x="116" y="38" width="46" height="30"/>
                                         <animations/>
                                         <state key="normal" title="TH"/>
                                         <connections>
                                             <action selector="changeTrackHeight:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YFp-dv-OQx"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WLs-Tx-TBB">
-                                        <rect key="frame" x="116" y="38" width="46" height="30"/>
-                                        <animations/>
-                                        <state key="normal" title="TCR"/>
-                                        <connections>
-                                            <action selector="changeTrackCircleRaidus:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4Wr-At-mds"/>
                                         </connections>
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0eP-fn-RGP">
@@ -128,6 +120,14 @@
                                         <state key="normal" title="Tint"/>
                                         <connections>
                                             <action selector="changeTintColor:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GIx-XZ-4nB"/>
+                                        </connections>
+                                    </button>
+                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WLs-Tx-TBB">
+                                        <rect key="frame" x="62" y="38" width="46" height="30"/>
+                                        <animations/>
+                                        <state key="normal" title="TCR"/>
+                                        <connections>
+                                            <action selector="changeTrackCircleRaidus:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4Wr-At-mds"/>
                                         </connections>
                                     </button>
                                 </subviews>
