@@ -13,6 +13,10 @@ StepSlider its custom implementation of slider such as UISlider for preset integ
 
 ## Installation
 
+### CocoaPods
+
+Add `pod 'StepSlider', '~> 0.0.1'` to your Podfile. 
+
 ### Manual Installation
 
 Just copy `StepSlider` class to your project.
