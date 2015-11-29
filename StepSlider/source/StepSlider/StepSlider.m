@@ -38,6 +38,9 @@ void withoutCAAnimation(withoutAnimationBlock code)
     
     CGFloat maxRadius;
     CGFloat diff;
+    
+    CGPoint startTouchPosition;
+    CGPoint startSliderPosition;
 }
 
 @end
@@ -105,7 +108,9 @@ void withoutCAAnimation(withoutAnimationBlock code)
     
     CGFloat stepWidth       = contentFrame.size.width / (self.maxCount - 1);
     CGFloat circleFrameSide = self.trackCircleRadius * 2.f;
-    CGFloat sliderFrameSide = self.sliderCircleRadius * 2.f;
+    CGFloat sliderDiameter  = self.sliderCircleRadius * 2.f;
+    CGFloat sliderFrameSide = fmaxf(self.sliderCircleRadius * 2.f, 44.f);
+    CGRect  sliderDrawRect  = CGRectMake((sliderFrameSide - sliderDiameter) / 2.f, (sliderFrameSide - sliderDiameter) / 2.f, sliderDiameter, sliderDiameter);
     
     CGPoint oldPosition = _sliderCircleLayer.position;
     CGPathRef oldPath   = _trackLayer.path;
@@ -116,9 +121,9 @@ void withoutCAAnimation(withoutAnimationBlock code)
     }
     
     _sliderCircleLayer.frame     = CGRectMake(0.f, 0.f, sliderFrameSide, sliderFrameSide);
-    _sliderCircleLayer.path      = [UIBezierPath bezierPathWithRoundedRect:_sliderCircleLayer.bounds cornerRadius:sliderFrameSide / 2].CGPath;
+    _sliderCircleLayer.path      = [UIBezierPath bezierPathWithRoundedRect:sliderDrawRect cornerRadius:sliderFrameSide / 2].CGPath;
     _sliderCircleLayer.fillColor = [self.sliderCircleColor CGColor];
-    _sliderCircleLayer.position  = CGPointMake(contentFrame.origin.x + stepWidth * self.index , contentFrame.size.height / 2.f);
+    _sliderCircleLayer.position  = CGPointMake(contentFrame.origin.x + stepWidth * self.index , (contentFrame.size.height ) / 2.f);
     
     if (animated) {
         CABasicAnimation *basicSliderAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
@@ -258,13 +263,16 @@ void withoutCAAnimation(withoutAnimationBlock code)
 
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    return CGRectContainsPoint(_sliderCircleLayer.frame, [touch locationInView:self]);
+    startTouchPosition = [touch locationInView:self];
+    startSliderPosition = _sliderCircleLayer.position;
+    
+    return CGRectContainsPoint(_sliderCircleLayer.frame, startTouchPosition);
 }
 
 - (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    CGFloat position = [touch locationInView:self].x;
-    CGFloat limitedPosition = fminf(fmaxf(position, maxRadius), self.bounds.size.width - maxRadius);
+    CGFloat position = startSliderPosition.x - (startTouchPosition.x - [touch locationInView:self].x);
+    CGFloat limitedPosition = fminf(fmaxf(maxRadius, position), self.bounds.size.width - maxRadius);
     
     withoutCAAnimation(^{
         _sliderCircleLayer.position = CGPointMake(limitedPosition, _sliderCircleLayer.position.y);
