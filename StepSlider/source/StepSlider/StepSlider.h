@@ -54,8 +54,9 @@ IB_DESIGNABLE
  */
 @property (nonatomic, strong) IBInspectable UIColor *sliderCircleColor;
 
-
 @property (nonatomic, strong) IBInspectable UIImage *sliderCircleImage;
+
+@property (nonatomic, strong) IBInspectable NSArray *labels;
 
 /**
  *  Set the `index` property to parameter value.
