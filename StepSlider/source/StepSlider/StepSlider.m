@@ -104,6 +104,9 @@ void withoutCAAnimation(withoutAnimationBlock code)
 
 - (void)layoutLayersAnimated:(BOOL)animated
 {
+    NSInteger indexDiff = fabsf(roundf([self indexCalculate]) - self.index);
+    BOOL left = (roundf([self indexCalculate]) - self.index) < 0;
+    
     CGRect contentFrame = CGRectMake(maxRadius, 0.f, self.bounds.size.width - 2 * maxRadius, self.bounds.size.height);
     
     CGFloat stepWidth       = contentFrame.size.width / (self.maxCount - 1);
@@ -157,6 +160,9 @@ void withoutCAAnimation(withoutAnimationBlock code)
         _trackCirclesArray = [[_trackCirclesArray subarrayWithRange:NSMakeRange(0, self.maxCount)] mutableCopy];
     }
     
+    NSTimeInterval animationTimeDiff = left ? [CATransaction animationDuration] / indexDiff : -[CATransaction animationDuration] / indexDiff;
+    NSTimeInterval animationTime = left ?  animationTimeDiff : [CATransaction animationDuration] + animationTimeDiff;
+    
     for (NSUInteger i = 0; i < self.maxCount; i++) {
         CAShapeLayer *trackCircle;
         
@@ -179,13 +185,15 @@ void withoutCAAnimation(withoutAnimationBlock code)
             
             if (!CGColorEqualToColor(newColor, trackCircle.fillColor)) {
                 
-                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)([CATransaction animationDuration] * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
+                dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(animationTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     trackCircle.fillColor = newColor;
                     CABasicAnimation *basicTrackCircleAnimation = [CABasicAnimation animationWithKeyPath:@"fillColor"];
                     basicTrackCircleAnimation.duration = [CATransaction animationDuration] / 2.f;
                     basicTrackCircleAnimation.fromValue = (__bridge id _Nullable)(oldColor);
                     [trackCircle addAnimation:basicTrackCircleAnimation forKey:@"fillColor"];
                 });
+                
+                animationTime += animationTimeDiff;
             }
         } else {
             trackCircle.fillColor = [self trackCircleColor:trackCircle];
@@ -266,7 +274,30 @@ void withoutCAAnimation(withoutAnimationBlock code)
     startTouchPosition = [touch locationInView:self];
     startSliderPosition = _sliderCircleLayer.position;
     
-    return CGRectContainsPoint(_sliderCircleLayer.frame, startTouchPosition);
+    if (CGRectContainsPoint(_sliderCircleLayer.frame, startTouchPosition)) {
+        return YES;
+    } else {
+        for (NSUInteger i = 0; i < _trackCirclesArray.count; i++) {
+            CALayer *dot = _trackCirclesArray[i];
+            
+            CGFloat dotRadiusDiff = 22 - self.trackCircleRadius;
+            CGRect frameToCheck = dotRadiusDiff > 0 ? CGRectInset(dot.frame, -dotRadiusDiff, -dotRadiusDiff) : dot.frame;
+            
+            if (CGRectContainsPoint(frameToCheck, startTouchPosition)) {
+                NSUInteger oldIndex = _index;
+                
+                _index = i;
+                
+                if (oldIndex != _index) {
+                    [self sendActionsForControlEvents:UIControlEventValueChanged];
+                }
+                animateLayouts = YES;
+                [self setNeedsLayout];
+                return NO;
+            }
+        }
+    }
+    return NO;
 }
 
 - (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
