@@ -324,10 +324,20 @@ void withoutCAAnimation(withoutAnimationBlock code)
 
 - (void)endTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
-    NSUInteger oldIndex = _index;
-    _index = roundf([self indexCalculate]);
+    [self endTouches];
+}
+
+- (void)cancelTrackingWithEvent:(UIEvent *)event
+{
+    [self endTouches];
+}
+
+- (void)endTouches
+{
+    NSUInteger newIndex = roundf([self indexCalculate]);
     
-    if (oldIndex != _index) {
+    if (newIndex != _index) {
+        _index = newIndex;
         [self sendActionsForControlEvents:UIControlEventValueChanged];
     }
     

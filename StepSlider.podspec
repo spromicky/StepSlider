@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "StepSlider"
-  s.version      = "0.1.0"
+  s.version      = "0.1.1"
   s.summary      = "StepSlider is a slider for integer values."
   s.homepage     = "https://github.com/spromicky/StepSlider"
   s.screenshots  = "https://github.com/spromicky/StepSlider/blob/master/example.gif?raw=true"
