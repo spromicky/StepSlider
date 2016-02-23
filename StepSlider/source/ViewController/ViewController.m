@@ -27,23 +27,23 @@
     static NSUInteger flag = 0;
     switch (flag % 5) {
         case 0:
-            self.sliderView.index = self.sliderView.maxCount - 1;
+            [self.sliderView setIndex:self.sliderView.maxCount - 1 animated:YES];
             break;
             
         case 1:
-            self.sliderView.index = self.sliderView.maxCount / 2;
+            [self.sliderView setIndex:self.sliderView.maxCount / 2 animated:YES];
             break;
             
         case 2:
-            self.sliderView.index = self.sliderView.maxCount / 3;
+            [self.sliderView setIndex:self.sliderView.maxCount / 3 animated:YES];
             break;
             
         case 3:
-            self.sliderView.index = 0;
+            [self.sliderView setIndex:0 animated:YES];
             break;
             
         case 4:
-            self.sliderView.index = 1;
+            [self.sliderView setIndex:1 animated:YES];
             break;
     }
     flag++;

@@ -22,4 +22,6 @@ IB_DESIGNABLE
 @property (nonatomic, strong) IBInspectable UIColor *trackColor;
 @property (nonatomic, strong) IBInspectable UIColor *sliderCircleColor;
 
+- (void)setIndex:(NSUInteger)index animated:(BOOL)animated;
+
 @end

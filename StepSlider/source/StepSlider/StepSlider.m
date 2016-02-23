@@ -347,6 +347,12 @@ void withoutCAAnimation(withoutAnimationBlock code)
 
 #pragma mark - Access methods
 
+- (void)setIndex:(NSUInteger)index animated:(BOOL)animated
+{
+    animateLayouts = animated;
+    self.index = index;
+}
+
 - (void)setTintColor:(UIColor *)tintColor
 {
     [super setTintColor:tintColor];
