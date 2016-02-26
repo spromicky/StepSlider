@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9060" systemVersion="15B42" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9051"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
         <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
@@ -19,9 +19,8 @@
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dNa-lq-0iy" customClass="StepSlider">
                                 <rect key="frame" x="20" y="58" width="560" height="30"/>
-                                <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
-                                <color key="tintColor" red="0.2137643914" green="0.73483758219999995" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="tintColor" red="0.50588235294117645" green="0.63137254901960782" blue="0.74509803921568629" alpha="1" colorSpace="calibratedRGB"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="30" id="KAr-04-dEN"/>
                                 </constraints>
@@ -54,13 +53,12 @@
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KDz-eV-f0y">
                                 <rect key="frame" x="180" y="111" width="240" height="21"/>
-                                <animations/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="BCC-mi-iIc"/>
                                     <constraint firstAttribute="width" constant="240" id="NHV-de-Sem"/>
                                 </constraints>
                                 <fontDescription key="fontDescription" type="system" pointSize="17"/>
-                                <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <color key="textColor" red="0.56470588235294117" green="0.81960784313725488" blue="0.46666666666666667" alpha="1" colorSpace="calibratedRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eYk-9l-jGe">
@@ -68,7 +66,7 @@
                                 <subviews>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4mV-vZ-SJb">
                                         <rect key="frame" x="8" y="8" width="46" height="30"/>
-                                        <animations/>
+                                        <color key="tintColor" red="0.50588235294117645" green="0.63137254901960782" blue="0.74509803921568629" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="Index"/>
                                         <connections>
                                             <action selector="changeIndex:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Tm6-nl-xBw"/>
@@ -76,7 +74,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zc0-sy-Hh0">
                                         <rect key="frame" x="62" y="10" width="46" height="30"/>
-                                        <animations/>
+                                        <color key="tintColor" red="0.50588235294117645" green="0.63137254901960782" blue="0.74509803921568629" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="Max"/>
                                         <connections>
                                             <action selector="changeMaxIndex:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hUf-9X-oUR"/>
@@ -84,7 +82,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="orR-ME-wWN">
                                         <rect key="frame" x="8" y="68" width="46" height="30"/>
-                                        <animations/>
+                                        <color key="tintColor" red="0.50588235294117645" green="0.63137254901960782" blue="0.74509803921568629" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="SC"/>
                                         <connections>
                                             <action selector="changeSliderCircleColor:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ume-mB-I50"/>
@@ -92,7 +90,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HqD-eV-ahe">
                                         <rect key="frame" x="8" y="38" width="46" height="30"/>
-                                        <animations/>
+                                        <color key="tintColor" red="0.50588235294117645" green="0.63137254901960782" blue="0.74509803921568629" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="TC"/>
                                         <connections>
                                             <action selector="changeTrackColor:" destination="BYZ-38-t0r" eventType="touchUpInside" id="y2m-88-3Uf"/>
@@ -100,7 +98,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iqU-D8-V5O">
                                         <rect key="frame" x="62" y="68" width="46" height="30"/>
-                                        <animations/>
+                                        <color key="tintColor" red="0.50588235294117645" green="0.63137254901960782" blue="0.74509803921568629" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="SR"/>
                                         <connections>
                                             <action selector="changeSliderCircleRadius:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HG8-lF-SHi"/>
@@ -108,7 +106,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ho3-LO-mVi">
                                         <rect key="frame" x="116" y="38" width="46" height="30"/>
-                                        <animations/>
+                                        <color key="tintColor" red="0.50588235294117645" green="0.63137254901960782" blue="0.74509803921568629" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="TH"/>
                                         <connections>
                                             <action selector="changeTrackHeight:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YFp-dv-OQx"/>
@@ -116,7 +114,7 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0eP-fn-RGP">
                                         <rect key="frame" x="116" y="10" width="46" height="30"/>
-                                        <animations/>
+                                        <color key="tintColor" red="0.50588235294117645" green="0.63137254901960782" blue="0.74509803921568629" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="Tint"/>
                                         <connections>
                                             <action selector="changeTintColor:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GIx-XZ-4nB"/>
@@ -124,14 +122,13 @@
                                     </button>
                                     <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WLs-Tx-TBB">
                                         <rect key="frame" x="62" y="38" width="46" height="30"/>
-                                        <animations/>
+                                        <color key="tintColor" red="0.50588235294117645" green="0.63137254901960782" blue="0.74509803921568629" alpha="1" colorSpace="calibratedRGB"/>
                                         <state key="normal" title="TCR"/>
                                         <connections>
                                             <action selector="changeTrackCircleRaidus:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4Wr-At-mds"/>
                                         </connections>
                                     </button>
                                 </subviews>
-                                <animations/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <constraints>
                                     <constraint firstAttribute="width" constant="171" id="hkw-Ta-jKv"/>
@@ -139,8 +136,7 @@
                                 </constraints>
                             </view>
                         </subviews>
-                        <animations/>
-                        <color key="backgroundColor" red="0.0" green="1" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <color key="backgroundColor" red="0.12549019607843137" green="0.14117647058823529" blue="0.1764705882352941" alpha="1" colorSpace="calibratedRGB"/>
                         <constraints>
                             <constraint firstItem="dNa-lq-0iy" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="4od-tT-3Hh"/>
                             <constraint firstItem="KDz-eV-f0y" firstAttribute="top" secondItem="dNa-lq-0iy" secondAttribute="bottom" constant="23" id="6U4-gh-3zH"/>

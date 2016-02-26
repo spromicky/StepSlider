@@ -1,7 +1,5 @@
 # StepSlider
 
-## Description
-
 StepSlider its custom implementation of slider such as UISlider for preset values. Behind the scenes StepSlider manipulate integer indexes. Its based on drawing directlyon CAShapeLayer. 
 
 You can add StepSlider right from code with any of standard initialisers. Or you can add it directly on your storybord. Its fully IBDesignable and IBInspetable compatible.
@@ -19,7 +17,7 @@ You can try it on [Appetize.io](https://appetize.io/app/pwhnvf8aqf6386t0qh4dxgbj
 
 ### CocoaPods
 
-Add `pod 'StepSlider', '~> 0.0.2'` to your Podfile. 
+Add `pod 'StepSlider'` to your Podfile. 
 
 ### Manual Installation
 
