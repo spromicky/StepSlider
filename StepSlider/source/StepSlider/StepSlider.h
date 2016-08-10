@@ -13,7 +13,7 @@ IB_DESIGNABLE
 @interface StepSlider : UIControl
 
 /**
- *  Maximum amount of dots in slider.
+ *  Maximum amount of dots in slider. Must be `2` or greater.
  */
 @property (nonatomic) IBInspectable NSUInteger maxCount;
 

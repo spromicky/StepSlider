@@ -233,6 +233,7 @@ void withoutCAAnimation(withoutAnimationBlock code)
 
 - (void)updateIndex
 {
+    NSAssert(_maxCount > 1, @"_maxCount must be greater than 1!");
     if (_index > (_maxCount - 1)) {
         _index = _maxCount - 1;
         [self sendActionsForControlEvents:UIControlEventValueChanged];
