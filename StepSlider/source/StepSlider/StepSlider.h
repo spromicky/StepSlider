@@ -38,6 +38,11 @@ IB_DESIGNABLE
  */
 @property (nonatomic) IBInspectable CGFloat sliderCircleRadius;
 
+/**
+ *  A Boolean value that determines whether user interaction with dots are ignored. Default value is `YES`.
+ */
+@property (nonatomic, getter=isDotsInteractionEnabled) IBInspectable BOOL dotsInteractionEnabled;
+
 
 /**
  *  Color of the slider slider.
