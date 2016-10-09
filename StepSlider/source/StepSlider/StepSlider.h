@@ -55,6 +55,16 @@ IB_DESIGNABLE
 @property (nonatomic, strong) IBInspectable UIColor *sliderCircleColor;
 
 /**
+ *  Color og the slider main wheel Title.
+ */
+@property (nonatomic, strong) IBInspectable UIColor *sliderCircleTitleColor;
+
+/**
+ *  Enable  the slider main wheel Title.
+ */
+@property (nonatomic) IBInspectable Boolean canShowSliderCircleTitle;
+
+/**
  *  Set the `index` property to parameter value.
  *
  *  @param index    The index, that you wanna to be selected.
