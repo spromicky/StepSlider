@@ -13,7 +13,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    self.sliderView.circleTitles = @[@"111",@"2222",@"333",@"4444",@"5",@"6",@"7"];
     [self.label setText:[NSString stringWithFormat:@"%lu", (unsigned long)self.sliderView.index]];
 }
 

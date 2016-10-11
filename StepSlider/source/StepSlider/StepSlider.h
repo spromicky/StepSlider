@@ -64,6 +64,13 @@ IB_DESIGNABLE
  */
 @property (nonatomic) IBInspectable Boolean canShowSliderCircleTitle;
 
+
+
+/**
+ *  Array of  the slider main wheel Titles.
+ */
+@property (nonatomic) NSArray *circleTitles;
+
 /**
  *  Set the `index` property to parameter value.
  *
