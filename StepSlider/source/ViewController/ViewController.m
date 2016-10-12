@@ -54,7 +54,7 @@
     static NSUInteger flag = 0;
     switch (flag % 5) {
         case 0:
-            self.sliderView.maxCount = 19;
+            self.sliderView.maxCount = 3;
             break;
             
         case 1:
@@ -62,11 +62,11 @@
             break;
             
         case 2:
-            self.sliderView.maxCount = 5;
+            self.sliderView.maxCount = 3;
             break;
             
         case 3:
-            self.sliderView.maxCount = 8;
+            self.sliderView.maxCount = 3;
             break;
             
         case 4:
