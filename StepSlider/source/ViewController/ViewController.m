@@ -13,7 +13,7 @@
 - (void)viewDidLoad
 {
     [super viewDidLoad];
-
+    self.sliderView.circleTitles = @[@"1",@"2",@"3",@"4",@"5"];
     [self.label setText:[NSString stringWithFormat:@"%lu", (unsigned long)self.sliderView.index]];
 }
 
@@ -51,25 +51,58 @@
 
 - (IBAction)changeMaxIndex:(id)sender
 {
+    NSMutableArray *array = [[NSMutableArray alloc]init];
+
     static NSUInteger flag = 0;
     switch (flag % 5) {
         case 0:
+
+            for (int i = 0; i < 19; i++)
+            {
+                NSString *string = [[NSString alloc]initWithFormat:@"%d",i];
+                [array addObject:string];
+            }
+            self.sliderView.circleTitles = array;
             self.sliderView.maxCount = 19;
             break;
             
         case 1:
+            for (int i = 0; i < 2; i++)
+            {
+                NSString *string = [[NSString alloc]initWithFormat:@"%d",i];
+                [array addObject:string];
+            }
+            self.sliderView.circleTitles = array;
             self.sliderView.maxCount = 2;
             break;
             
         case 2:
+            for (int i = 0; i < 5; i++)
+            {
+                NSString *string = [[NSString alloc]initWithFormat:@"%d",i];
+                [array addObject:string];
+            }
+            self.sliderView.circleTitles = array;
             self.sliderView.maxCount = 5;
             break;
             
         case 3:
+            for (int i = 0; i < 8; i++)
+            {
+                NSString *string = [[NSString alloc]initWithFormat:@"%d",i];
+                [array addObject:string];
+            }
+            self.sliderView.circleTitles = array;
             self.sliderView.maxCount = 8;
             break;
             
         case 4:
+            for (int i = 0; i < 4; i++)
+            {
+                NSString *string = [[NSString alloc]initWithFormat:@"%d",i];
+                [array addObject:string];
+            }
+            self.sliderView.circleTitles = array;
             self.sliderView.maxCount = 4;
             break;
     }

@@ -10,11 +10,11 @@
 
 #define GENERATE_SETTER(PROPERTY, TYPE, SETTER, UPDATER) \
 - (void)SETTER:(TYPE)PROPERTY { \
-    if (_##PROPERTY != PROPERTY) { \
-        _##PROPERTY = PROPERTY; \
-        UPDATER \
-        [self setNeedsLayout]; \
-    } \
+if (_##PROPERTY != PROPERTY) { \
+_##PROPERTY = PROPERTY; \
+UPDATER \
+[self setNeedsLayout]; \
+} \
 }
 
 static NSString * const kTrackAnimation = @"kTrackAnimation";
@@ -33,6 +33,7 @@ void withoutCAAnimation(withoutAnimationBlock code)
     CAShapeLayer *_trackLayer;
     CAShapeLayer *_sliderCircleLayer;
     NSMutableArray <CAShapeLayer *> *_trackCirclesArray;
+    NSMutableArray <UILabel *> *_labelsCirclesArray;
     
     BOOL animateLayouts;
     
@@ -78,7 +79,10 @@ void withoutCAAnimation(withoutAnimationBlock code)
 
 - (void)addLayers
 {
+    _labelsCirclesArray = [[NSMutableArray alloc]init];
     _dotsInteractionEnabled = YES;
+    _sliderCircleTitleColor  = [UIColor yellowColor];
+    _canShowSliderCircleTitle  = YES;
     _trackCirclesArray = [[NSMutableArray alloc] init];
     
     _trackLayer = [CAShapeLayer layer];
@@ -99,6 +103,7 @@ void withoutCAAnimation(withoutAnimationBlock code)
     _sliderCircleRadius = 12.5f;
     _trackColor         = [UIColor colorWithWhite:0.41f alpha:1.f];
     _sliderCircleColor  = [UIColor whiteColor];
+    _labelsCirclesArray = [[NSMutableArray alloc]init];
     
     [self setNeedsLayout];
 }
@@ -150,17 +155,20 @@ void withoutCAAnimation(withoutAnimationBlock code)
         basicTrackAnimation.fromValue = (__bridge id _Nullable)(oldPath);
         [_trackLayer addAnimation:basicTrackAnimation forKey:@"path"];
     }
-
+    
     
     if (_trackCirclesArray.count > self.maxCount) {
         
         for (NSUInteger i = self.maxCount; i < _trackCirclesArray.count; i++) {
             [_trackCirclesArray[i] removeFromSuperlayer];
         }
-        
+
+
         _trackCirclesArray = [[_trackCirclesArray subarrayWithRange:NSMakeRange(0, self.maxCount)] mutableCopy];
     }
-    
+    for (NSUInteger i = 0; i < _labelsCirclesArray.count; i++) {
+        [_labelsCirclesArray[i] removeFromSuperview];
+    }
     NSTimeInterval animationTimeDiff = left ? [CATransaction animationDuration] / indexDiff : -[CATransaction animationDuration] / indexDiff;
     NSTimeInterval animationTime = left ?  animationTimeDiff : [CATransaction animationDuration] + animationTimeDiff;
     
@@ -171,7 +179,7 @@ void withoutCAAnimation(withoutAnimationBlock code)
             trackCircle = _trackCirclesArray[i];
         } else {
             trackCircle       = [CAShapeLayer layer];
-
+            
             [self.layer addSublayer:trackCircle];
             [_trackCirclesArray addObject:trackCircle];
         }
@@ -179,6 +187,39 @@ void withoutCAAnimation(withoutAnimationBlock code)
         trackCircle.frame    = CGRectMake(0.f, 0.f, circleFrameSide, circleFrameSide);
         trackCircle.path     = [UIBezierPath bezierPathWithRoundedRect:trackCircle.bounds cornerRadius:circleFrameSide / 2].CGPath;
         trackCircle.position = CGPointMake(contentFrame.origin.x + stepWidth * i, contentFrame.size.height / 2.f);
+        
+        
+        if (_canShowSliderCircleTitle == YES){
+            
+            
+            //            if (_labelsCirclesArray.count == 0){
+            NSString *text = [_circleTitles objectAtIndex:i];
+            CGSize frameSize = CGSizeMake(300, 50);
+            UIFont *font = [UIFont systemFontOfSize:12];
+            
+            CGRect idealFrame = [text boundingRectWithSize:frameSize
+                                                   options:NSStringDrawingUsesLineFragmentOrigin
+                                                attributes:@{ NSFontAttributeName:font }
+                                                   context:nil];
+            
+            
+            UILabel *fromLabel = [[UILabel alloc]initWithFrame:CGRectMake(trackCircle.position.x-5, - 17.f, idealFrame.size.width, contentFrame.size.height / 2.f)];
+            fromLabel.font = font;
+            fromLabel.text = [_circleTitles objectAtIndex:i];
+            fromLabel.numberOfLines = 1;
+            fromLabel.baselineAdjustment = UIBaselineAdjustmentAlignBaselines; // or UIBaselineAdjustmentAlignCenters, or UIBaselineAdjustmentNone
+            fromLabel.adjustsFontSizeToFitWidth = YES;
+            fromLabel.minimumScaleFactor = 10.0f/12.0f;
+            fromLabel.clipsToBounds = YES;
+            fromLabel.textColor = _sliderCircleTitleColor;
+            fromLabel.textAlignment = NSTextAlignmentLeft;
+            [_labelsCirclesArray addObject:fromLabel];
+            [self addSubview:fromLabel];
+            //            }else{
+            //
+            //            }
+            
+        }
         
         if (animated) {
             CGColorRef newColor = [self trackCircleColor:trackCircle];
