@@ -83,7 +83,7 @@ void withoutCAAnimation(withoutAnimationBlock code)
     
     _trackLayer = [CAShapeLayer layer];
     _sliderCircleLayer = [CAShapeLayer layer];
-    
+
     [self.layer addSublayer:_sliderCircleLayer];
     [self.layer addSublayer:_trackLayer];
 }
@@ -125,10 +125,14 @@ void withoutCAAnimation(withoutAnimationBlock code)
     }
     
     _sliderCircleLayer.frame     = CGRectMake(0.f, 0.f, sliderFrameSide, sliderFrameSide);
-    _sliderCircleLayer.path      = [UIBezierPath bezierPathWithRoundedRect:sliderDrawRect cornerRadius:sliderFrameSide / 2].CGPath;
-    _sliderCircleLayer.fillColor = [self.sliderCircleColor CGColor];
     _sliderCircleLayer.position  = CGPointMake(contentFrame.origin.x + stepWidth * self.index , (contentFrame.size.height ) / 2.f);
-    
+    if (self.sliderCircleImage) {
+        _sliderCircleLayer.contents = (__bridge id)self.sliderCircleImage.CGImage;
+    } else {
+        _sliderCircleLayer.path      = [UIBezierPath bezierPathWithRoundedRect:sliderDrawRect cornerRadius:sliderFrameSide / 2].CGPath;
+        _sliderCircleLayer.fillColor = [self.sliderCircleColor CGColor];
+    }
+
     if (animated) {
         CABasicAnimation *basicSliderAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
         basicSliderAnimation.duration = [CATransaction animationDuration];
@@ -368,5 +372,6 @@ GENERATE_SETTER(trackCircleRadius, CGFloat, setTrackCircleRadius, [self updateDi
 GENERATE_SETTER(sliderCircleRadius, CGFloat, setSliderCircleRadius, [self updateMaxRadius];);
 GENERATE_SETTER(trackColor, UIColor*, setTrackColor, );
 GENERATE_SETTER(sliderCircleColor, UIColor*, setSliderCircleColor, );
+GENERATE_SETTER(sliderCircleImage, UIImage*, setSliderCircleImage, );
 
 @end
