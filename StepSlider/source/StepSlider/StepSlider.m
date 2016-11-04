@@ -279,8 +279,10 @@ void withoutCAAnimation(withoutAnimationBlock code)
 {
     startTouchPosition = [touch locationInView:self];
     startSliderPosition = _sliderCircleLayer.position;
-    
-    if (self.isDotsInteractionEnabled) {
+
+    if (CGRectContainsPoint(_sliderCircleLayer.frame, startTouchPosition)) {
+        return YES;
+    } else if (self.isDotsInteractionEnabled) {
         for (NSUInteger i = 0; i < _trackCirclesArray.count; i++) {
             CALayer *dot = _trackCirclesArray[i];
             
@@ -301,9 +303,8 @@ void withoutCAAnimation(withoutAnimationBlock code)
             }
         }
         return NO;
-    } else {
-        return CGRectContainsPoint(_sliderCircleLayer.frame, startTouchPosition);
     }
+    return NO;
 }
 
 - (BOOL)continueTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
