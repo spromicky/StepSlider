@@ -50,11 +50,12 @@ IB_DESIGNABLE
 @property (nonatomic, strong) IBInspectable UIColor *trackColor;
 
 /**
- *  Color og the slider main wheel.
+ *  Color of the slider main wheel.
  */
 @property (nonatomic, strong) IBInspectable UIColor *sliderCircleColor;
 
-@property (nonatomic, strong) UIImage *sliderCircleImage;
+
+@property (nonatomic, strong) IBInspectable UIImage *sliderCircleImage;
 
 /**
  *  Set the `index` property to parameter value.
