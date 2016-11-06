@@ -238,4 +238,9 @@
     flag++;
 }
 
+- (IBAction)changeSliderCircleImage:(UIButton *)sender {
+    sender.selected = !sender.selected;
+    self.sliderView.sliderCircleImage = sender.selected ? [UIImage imageNamed:@"thumb"] : nil;
+}
+
 @end
