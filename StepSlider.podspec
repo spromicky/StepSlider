@@ -1,6 +1,6 @@
 Pod::Spec.new do |s|
   s.name         = "StepSlider"
-  s.version      = "0.1.4"
+  s.version      = "0.1.5"
   s.summary      = "StepSlider its custom implementation of slider such as UISlider for preset values. Its based on drawing directly on CAShapeLayer."
   s.homepage     = "https://github.com/spromicky/StepSlider"
   s.screenshots  = "https://github.com/spromicky/StepSlider/blob/master/example.gif?raw=true"
