@@ -113,7 +113,7 @@ void withoutCAAnimation(withoutAnimationBlock code)
     
     CGRect contentFrame = CGRectMake(maxRadius, 0.f, self.bounds.size.width - 2 * maxRadius, self.bounds.size.height - 50);
     
-    CGFloat stepWidth       = contentFrame.size.width / (self.maxCount - 1);
+    CGFloat stepWidth       = contentFrame.size.width / ([self elemenetsCount] - 1);
     CGFloat circleFrameSide = self.trackCircleRadius * 2.f;
     CGFloat sliderDiameter  = self.sliderCircleRadius * 2.f;
     
@@ -122,7 +122,7 @@ void withoutCAAnimation(withoutAnimationBlock code)
     
     if (!animated) {
         [CATransaction begin];
-        [CATransaction setValue: (id) kCFBooleanTrue forKey: kCATransactionDisableActions];
+        [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
     }
 
     _sliderCircleLayer.path     = NULL;
@@ -165,53 +165,49 @@ void withoutCAAnimation(withoutAnimationBlock code)
     }
 
     
-    if (_trackCirclesArray.count > self.maxCount) {
-        
-        for (NSUInteger i = self.maxCount; i < _trackCirclesArray.count; i++) {
-            [_trackCirclesArray[i] removeFromSuperlayer];
+    _trackCirclesArray = [self clearExcessLayers:_trackCirclesArray];
+    CGFloat currentWidth =_trackLabelsArray.firstObject.bounds.size.width;
+    if (currentWidth > 0 && currentWidth != stepWidth) {
+        for (CALayer *label in _trackLabelsArray) {
+            [label removeFromSuperlayer];
         }
-        
-        _trackCirclesArray = [[_trackCirclesArray subarrayWithRange:NSMakeRange(0, self.maxCount)] mutableCopy];
+        [_trackLabelsArray removeAllObjects];
     }
     
-    if (_trackLabelsArray.count > self.maxCount) {
-        
-        for (NSUInteger i = self.maxCount; i < _trackCirclesArray.count; i++) {
-            [_trackLabelsArray[i] removeFromSuperlayer];
-        }
-        
-        _trackLabelsArray = [[_trackLabelsArray subarrayWithRange:NSMakeRange(0, self.maxCount)] mutableCopy];
+    NSTimeInterval animationTimeDiff = 0;
+    if (indexDiff > 0) {
+        animationTimeDiff = (left ? [CATransaction animationDuration] : -[CATransaction animationDuration]) / indexDiff;   
     }
-    
-    NSTimeInterval animationTimeDiff = left ? [CATransaction animationDuration] / indexDiff : -[CATransaction animationDuration] / indexDiff;
-    NSTimeInterval animationTime = left ?  animationTimeDiff : [CATransaction animationDuration] + animationTimeDiff;
+    NSTimeInterval animationTime     = left ? animationTimeDiff : [CATransaction animationDuration] + animationTimeDiff;
+    CGFloat circleAnimation          = circleFrameSide / _trackLayer.frame.size.width;
     
     for (NSUInteger i = 0; i < self.maxCount; i++) {
-        CAShapeLayer *trackCircle;
-        CATextLayer  *trackLabel;
         
-        if (i < _trackCirclesArray.count) {
-            trackCircle = _trackCirclesArray[i];
-            trackLabel = _trackLabelsArray[i];
-        } else {
-            trackCircle       = [CAShapeLayer layer];
-            trackLabel        = [self textLayerWithText:[NSString stringWithFormat:@"%ld",i]];//[CATextLayer layer];
-
-            [self.layer addSublayer:trackCircle];
-            [self.layer addSublayer:trackLabel];
+        if (currentWidth != stepWidth) {
+            CATextLayer *trackLabel = [self textLayerWithText:[NSString stringWithFormat:@"%lu", i * 24]];
             
-            [_trackCirclesArray addObject:trackCircle];
+            trackLabel.position = CGPointMake(contentFrame.origin.x + stepWidth * i, contentFrame.size.height + 20);
+            trackLabel.bounds   = CGRectMake(0.f, 0.f, stepWidth, circleFrameSide * 2);
+            [self.layer addSublayer:trackLabel];
             [_trackLabelsArray addObject:trackLabel];
         }
         
-        trackCircle.frame    = CGRectMake(0.f, 0.f, circleFrameSide, circleFrameSide);
+        CAShapeLayer *trackCircle;
+        
+        if (i < _trackCirclesArray.count) {
+            trackCircle = _trackCirclesArray[i];
+        } else {
+            trackCircle = [CAShapeLayer layer];
+            
+            [self.layer addSublayer:trackCircle];
+            
+            [_trackCirclesArray addObject:trackCircle];
+        }
+        
+        trackCircle.bounds   = CGRectMake(0.f, 0.f, circleFrameSide, circleFrameSide);
         trackCircle.path     = [UIBezierPath bezierPathWithRoundedRect:trackCircle.bounds cornerRadius:circleFrameSide / 2].CGPath;
         trackCircle.position = CGPointMake(contentFrame.origin.x + stepWidth * i, contentFrame.size.height / 2.f);
         
-        
-        trackLabel.frame     = CGRectMake(0.f,0.f, circleFrameSide*2, circleFrameSide*2);
-        trackLabel.position  = CGPointMake(contentFrame.origin.x + stepWidth * i, contentFrame.size.height + 20);
-//        trackLabel.string    = [NSString stringWithFormat:@"%ld",i];
         
         if (animated) {
             CGColorRef newColor = [self trackCircleColor:trackCircle];
@@ -222,7 +218,7 @@ void withoutCAAnimation(withoutAnimationBlock code)
                 dispatch_after(dispatch_time(DISPATCH_TIME_NOW, (int64_t)(animationTime * NSEC_PER_SEC)), dispatch_get_main_queue(), ^{
                     trackCircle.fillColor = newColor;
                     CABasicAnimation *basicTrackCircleAnimation = [CABasicAnimation animationWithKeyPath:@"fillColor"];
-                    basicTrackCircleAnimation.duration = [CATransaction animationDuration] / 2.f;
+                    basicTrackCircleAnimation.duration = [CATransaction animationDuration] * circleAnimation;
                     basicTrackCircleAnimation.fromValue = (__bridge id _Nullable)(oldColor);
                     [trackCircle addAnimation:basicTrackCircleAnimation forKey:@"fillColor"];
                 });
@@ -251,34 +247,22 @@ void withoutCAAnimation(withoutAnimationBlock code)
     animateLayouts = NO;
 }
 
-- (CATextLayer *)textLayerWithText:(NSString*)text{
-    //create a text layer
-    CATextLayer *textLayer = [CATextLayer layer];
-//    textLayer.frame = self.labelView.bounds;
-//    [self.labelView.layer addSublayer:textLayer];
+#pragma mark - Helpers
+
+- (NSMutableArray *)clearExcessLayers:(NSMutableArray *)layers
+{
+    if (layers.count > self.maxCount) {
+        
+        for (NSUInteger i = self.maxCount; i < layers.count; i++) {
+            [layers[i] removeFromSuperlayer];
+        }
+        
+        return [[layers subarrayWithRange:NSMakeRange(0, self.maxCount)] mutableCopy];
+    }
     
-    //set text attributes
-    textLayer.foregroundColor = [UIColor blackColor].CGColor;
-    textLayer.alignmentMode = kCAAlignmentCenter;
-    textLayer.wrapped = YES;
-    
-    //choose a font
-    UIFont *font = [UIFont systemFontOfSize:15];
-    
-    //set layer font
-    CFStringRef fontName = (__bridge CFStringRef)font.fontName;
-    CGFontRef fontRef = CGFontCreateWithFontName(fontName);
-    textLayer.font = fontRef;
-    textLayer.fontSize = font.pointSize;
-    CGFontRelease(fontRef);
-    
-    
-    //set layer text
-    textLayer.string = text;
-    return textLayer;
+    return layers;
 }
 
-#pragma mark - Helpers
 /*
  Calculate distance from trackCircle center to point where circle cross track line.
  */
@@ -294,9 +278,9 @@ void withoutCAAnimation(withoutAnimationBlock code)
 
 - (void)updateIndex
 {
-    NSAssert(_maxCount > 1, @"_maxCount must be greater than 1!");
-    if (_index > (_maxCount - 1)) {
-        _index = _maxCount - 1;
+    NSAssert(self.maxCount > 1, @"_maxCount must be greater than 1!");
+    if (_index > (self.maxCount - 1)) {
+        _index = self.maxCount - 1;
         [self sendActionsForControlEvents:UIControlEventValueChanged];
     }
 }
@@ -408,7 +392,35 @@ void withoutCAAnimation(withoutAnimationBlock code)
     [self setNeedsLayout];
 }
 
+#pragma mark - Texts
+
+- (CATextLayer *)textLayerWithText:(NSString *)text
+{
+    CATextLayer *textLayer = [CATextLayer layer];
+    
+    textLayer.foregroundColor = [UIColor whiteColor].CGColor;
+    textLayer.alignmentMode   = kCAAlignmentCenter;
+    textLayer.wrapped         = NO;
+    textLayer.contentsScale   = [UIScreen mainScreen].scale;
+    
+    UIFont *font         = [UIFont systemFontOfSize:15];
+    CFStringRef fontName = (__bridge CFStringRef)font.fontName;
+    CGFontRef fontRef    = CGFontCreateWithFontName(fontName);
+    
+    textLayer.font     = fontRef;
+    textLayer.fontSize = font.pointSize;
+    CGFontRelease(fontRef);
+    textLayer.string = text;
+    
+    return textLayer;
+}
+
 #pragma mark - Access methods
+
+- (NSUInteger)elemenetsCount
+{
+    return self.labels.count > 0 ? self.labels.count : self.maxCount;
+}
 
 - (void)setIndex:(NSUInteger)index animated:(BOOL)animated
 {
