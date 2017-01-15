@@ -8,13 +8,27 @@
 
 #import <UIKit/UIKit.h>
 
+/**
+ *  Vertical orientatons of dot labels.
+ */
+typedef NS_ENUM(NSUInteger, StepSliderTextOrientation) {
+    /**
+     *  Set text labels below slider.
+     */
+    StepSliderTextOrientationDown,
+    /**
+     *  Set text labels above slider.
+     */
+    StepSliderTextOrientationUp,
+};
+
 IB_DESIGNABLE
 
 @interface StepSlider : UIControl
 
 /**
  *  Maximum amount of dots in slider. Must be `2` or greater.
- *  Note: `maxCount` will be ignored if `labels` array not empty.
+ *  Note: If `labels` array not empty set `maxCount` to labels count.
  */
 @property (nonatomic) IBInspectable NSUInteger maxCount;
 
@@ -62,9 +76,36 @@ IB_DESIGNABLE
 
 /**
  *  Text for labels that will be show near every dot.
- *  Note: Priority is given to `labels.count` if array not empty.
+ *  Note: If `labels` array not empty set `maxCount` to labels count.
  */
 @property (nonatomic, strong) NSArray <NSString *> *labels;
+
+/**
+ *  Font of dot labels.
+ *  Can not be `IBInspectable`. http://openradar.appspot.com/21889252
+ */
+@property (nonatomic, strong) UIFont *labelFont;
+
+/**
+ *  Color of dot labels.
+ */
+@property (nonatomic, strong) IBInspectable UIColor *labelColor;
+
+/**
+ *  Offset between slider and labels.
+ */
+@property (nonatomic) IBInspectable CGFloat labelOffset;
+
+/**
+ *  Current vertical orientatons of dot labels.
+ */
+@property (nonatomic) StepSliderTextOrientation labelOrientation;
+
+/**
+ *  If `YES` adjust first and last labels to StepSlider frame. And change alingment to left and right. 
+ *  Otherwise label position is same as trackCircle, and aligment always is center.
+ */
+@property (nonatomic) IBInspectable BOOL adjustLabel;
 
 
 /**

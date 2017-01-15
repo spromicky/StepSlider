@@ -14,12 +14,12 @@
 {
     [super viewDidLoad];
 
-    [self.label setText:[NSString stringWithFormat:@"%lu", (unsigned long)self.sliderView.index]];
+    [self.label setText:[NSString stringWithFormat:@"Selected index: %lu", (unsigned long)self.sliderView.index]];
 }
 
 - (IBAction)changeValue:(StepSlider *)sender
 {
-    [self.label setText:[NSString stringWithFormat:@"%lu", (unsigned long)sender.index]];
+    [self.label setText:[NSString stringWithFormat:@"Selected index: %lu", (unsigned long)sender.index]];
 }
 
 - (IBAction)changeIndex:(id)sender
@@ -236,6 +236,93 @@
             break;
     }
     flag++;
+}
+
+- (IBAction)toggleLabels:(UIButton *)sender
+{
+    static NSUInteger flag = 0;
+    switch (flag % 3) {
+        case 0:
+            self.sliderView.labels = @[@"First", @"Second", @"Third"];
+            break;
+        case 1:
+            self.sliderView.labels = @[@"1", @"2", @"3", @"4", @"5"];
+            break;
+        case 2:
+            self.sliderView.labels = nil;
+            break;
+        case 3:
+
+            break;
+    }
+    flag++;
+}
+
+- (IBAction)changeLabelsFont:(id)sender
+{
+    static NSUInteger flag = 0;
+    switch (flag % 4) {
+        case 0:
+            self.sliderView.labelFont = [UIFont systemFontOfSize:10.f weight:UIFontWeightThin];
+            break;
+        case 1:
+            self.sliderView.labelFont = [UIFont boldSystemFontOfSize:15.f];
+            break;
+        case 2:
+            self.sliderView.labelFont = [UIFont italicSystemFontOfSize:20.f];
+            break;
+        case 3:
+            self.sliderView.labelFont = [UIFont systemFontOfSize:15.f];
+            break;
+    }
+    flag++;
+}
+
+- (IBAction)changeLabelsColor:(id)sender
+{
+    static NSUInteger flag = 0;
+    switch (flag % 3) {
+        case 0:
+            self.sliderView.labelColor = [UIColor greenColor];
+            break;
+        case 1:
+            self.sliderView.labelColor = [UIColor redColor];
+            break;
+        case 2:
+            self.sliderView.labelColor = [UIColor whiteColor];
+            break;
+    }
+    flag++;
+}
+
+- (IBAction)changeLabelsOffset:(id)sender
+{
+    static NSUInteger flag = 0;
+    switch (flag % 3) {
+        case 0:
+            self.sliderView.labelOffset = 0.f;
+            break;
+        case 1:
+            self.sliderView.labelOffset = 50.f;
+            break;
+        case 2:
+            self.sliderView.labelOffset = 20.f;
+            break;
+    }
+    flag++;
+}
+
+- (IBAction)changeLabelsOrientation:(id)sender
+{
+    static NSUInteger flag = 1;
+    self.sliderView.labelOrientation = flag % 2;
+    flag++;
+}
+
+- (IBAction)adjustLabels:(UIButton *)sender
+{
+    sender.selected = !sender.selected;
+    self.sliderView.adjustLabel = sender.selected;
 }
 
 - (IBAction)changeSliderCircleImage:(UIButton *)sender{

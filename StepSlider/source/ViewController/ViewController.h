@@ -25,5 +25,12 @@
 - (IBAction)changeTrackCircleRaidus:(id)sender;
 - (IBAction)changeTrackHeight:(id)sender;
 
+- (IBAction)toggleLabels:(UIButton *)sender;
+- (IBAction)changeLabelsFont:(id)sender;
+- (IBAction)changeLabelsColor:(id)sender;
+- (IBAction)changeLabelsOffset:(id)sender;
+- (IBAction)changeLabelsOrientation:(id)sender;
+- (IBAction)adjustLabels:(UIButton *)sender;
+
 @end
 

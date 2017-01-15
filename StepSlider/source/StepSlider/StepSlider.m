@@ -42,6 +42,8 @@ void withoutCAAnimation(withoutAnimationBlock code)
     
     CGPoint startTouchPosition;
     CGPoint startSliderPosition;
+    
+    CGSize contentSize;
 }
 
 @end
@@ -89,6 +91,9 @@ void withoutCAAnimation(withoutAnimationBlock code)
 
     [self.layer addSublayer:_sliderCircleLayer];
     [self.layer addSublayer:_trackLayer];
+    
+    _labelFont = [UIFont systemFontOfSize:15.f];
+    contentSize = self.bounds.size;
 }
 
 - (void)generalSetup
@@ -102,8 +107,23 @@ void withoutCAAnimation(withoutAnimationBlock code)
     _sliderCircleRadius = 12.5f;
     _trackColor         = [UIColor colorWithWhite:0.41f alpha:1.f];
     _sliderCircleColor  = [UIColor whiteColor];
+    _labelOffset        = 20.f;
+    _labelColor         = [UIColor whiteColor];
     
     [self setNeedsLayout];
+}
+
+- (CGSize)intrinsicContentSize
+{
+    return contentSize;
+}
+
+#pragma mark - Draw
+
+- (void)prepareForInterfaceBuilder
+{
+    [self updateMaxRadius];
+    [super prepareForInterfaceBuilder];
 }
 
 - (void)layoutLayersAnimated:(BOOL)animated
@@ -111,14 +131,40 @@ void withoutCAAnimation(withoutAnimationBlock code)
     NSInteger indexDiff = fabsf(roundf([self indexCalculate]) - self.index);
     BOOL left = (roundf([self indexCalculate]) - self.index) < 0;
     
-    CGRect contentFrame = CGRectMake(maxRadius, 0.f, self.bounds.size.width - 2 * maxRadius, self.bounds.size.height - 50);
+    CGFloat sliderHeight = fmaxf(maxRadius, self.trackHeight / 2.f) * 2.f;
+    CGFloat sliderHeightWithLabels = sliderHeight;
+    CGFloat labelHeight = 0.f;
     
-    CGFloat stepWidth       = contentFrame.size.width / ([self elemenetsCount] - 1);
+    if (self.labels.count) {
+        labelHeight = ceilf([@"jP" sizeWithAttributes:@{NSFontAttributeName : self.labelFont}].height);
+        sliderHeightWithLabels += labelHeight + self.labelOffset;
+    }
+    
+    contentSize = CGSizeMake(fmaxf(44.f, self.bounds.size.width), fmaxf(44.f, sliderHeightWithLabels));
+    if (!CGSizeEqualToSize(self.bounds.size, contentSize)) {
+        [self invalidateIntrinsicContentSize];
+        return;
+    }
+    
+    CGFloat contentFrameY = (self.bounds.size.height - sliderHeightWithLabels) / 2.f;
+    
+    if (self.labelOrientation == StepSliderTextOrientationUp && self.labels.count) {
+        contentFrameY += labelHeight + self.labelOffset;
+    }
+    
+    CGRect contentFrame = CGRectMake(maxRadius,
+                                     contentFrameY,
+                                     self.bounds.size.width - 2 * maxRadius,
+                                     sliderHeight);
+    
+    CGFloat stepWidth       = contentFrame.size.width / (self.maxCount - 1);
     CGFloat circleFrameSide = self.trackCircleRadius * 2.f;
     CGFloat sliderDiameter  = self.sliderCircleRadius * 2.f;
     
     CGPoint oldPosition = _sliderCircleLayer.position;
     CGPathRef oldPath   = _trackLayer.path;
+    
+    CGFloat labelsY     = self.labelOrientation ? (self.bounds.size.height - sliderHeightWithLabels) / 2.f : (CGRectGetMaxY(contentFrame) + self.labelOffset);
     
     if (!animated) {
         [CATransaction begin];
@@ -140,7 +186,7 @@ void withoutCAAnimation(withoutAnimationBlock code)
         _sliderCircleLayer.path      = [UIBezierPath bezierPathWithRoundedRect:sliderDrawRect cornerRadius:sliderFrameSide / 2].CGPath;
         _sliderCircleLayer.fillColor = [self.sliderCircleColor CGColor];
     }
-    _sliderCircleLayer.position = CGPointMake(contentFrame.origin.x + stepWidth * self.index , (contentFrame.size.height ) / 2.f);
+    _sliderCircleLayer.position = CGPointMake(contentFrame.origin.x + stepWidth * self.index, CGRectGetMidY(contentFrame));
 
     if (animated) {
         CABasicAnimation *basicSliderAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
@@ -150,7 +196,7 @@ void withoutCAAnimation(withoutAnimationBlock code)
     }
     
     _trackLayer.frame = CGRectMake(contentFrame.origin.x,
-                                   (contentFrame.size.height - self.trackHeight) / 2.f,
+                                   CGRectGetMidY(contentFrame) - self.trackHeight / 2.f,
                                    contentFrame.size.width,
                                    self.trackHeight);
     _trackLayer.path            = [self fillingPath];
@@ -166,33 +212,26 @@ void withoutCAAnimation(withoutAnimationBlock code)
 
     
     _trackCirclesArray = [self clearExcessLayers:_trackCirclesArray];
-    CGFloat currentWidth =_trackLabelsArray.firstObject.bounds.size.width;
-    if (currentWidth > 0 && currentWidth != stepWidth) {
-        for (CALayer *label in _trackLabelsArray) {
-            [label removeFromSuperlayer];
-        }
-        [_trackLabelsArray removeAllObjects];
+    
+    CGFloat currentWidth = self.adjustLabel ? _trackLabelsArray.firstObject.bounds.size.width * 2 : _trackLabelsArray.firstObject.bounds.size.width;
+    if ((currentWidth > 0 && currentWidth != stepWidth) || !self.labels.count) {
+        [self removeLabelLayers];
     }
     
     NSTimeInterval animationTimeDiff = 0;
     if (indexDiff > 0) {
         animationTimeDiff = (left ? [CATransaction animationDuration] : -[CATransaction animationDuration]) / indexDiff;   
     }
-    NSTimeInterval animationTime     = left ? animationTimeDiff : [CATransaction animationDuration] + animationTimeDiff;
-    CGFloat circleAnimation          = circleFrameSide / _trackLayer.frame.size.width;
+    NSTimeInterval animationTime = left ? animationTimeDiff : [CATransaction animationDuration] + animationTimeDiff;
+    CGFloat circleAnimation      = circleFrameSide / _trackLayer.frame.size.width;
     
     for (NSUInteger i = 0; i < self.maxCount; i++) {
-        
-        if (currentWidth != stepWidth) {
-            CATextLayer *trackLabel = [self textLayerWithText:[NSString stringWithFormat:@"%lu", i * 24]];
-            
-            trackLabel.position = CGPointMake(contentFrame.origin.x + stepWidth * i, contentFrame.size.height + 20);
-            trackLabel.bounds   = CGRectMake(0.f, 0.f, stepWidth, circleFrameSide * 2);
-            [self.layer addSublayer:trackLabel];
-            [_trackLabelsArray addObject:trackLabel];
-        }
-        
         CAShapeLayer *trackCircle;
+        CATextLayer *trackLabel;
+        
+        if (self.labels.count) {
+            trackLabel = [self textLayerWithSize:CGSizeMake(stepWidth, labelHeight) index:i];
+        }
         
         if (i < _trackCirclesArray.count) {
             trackCircle = _trackCirclesArray[i];
@@ -206,9 +245,11 @@ void withoutCAAnimation(withoutAnimationBlock code)
         
         trackCircle.bounds   = CGRectMake(0.f, 0.f, circleFrameSide, circleFrameSide);
         trackCircle.path     = [UIBezierPath bezierPathWithRoundedRect:trackCircle.bounds cornerRadius:circleFrameSide / 2].CGPath;
-        trackCircle.position = CGPointMake(contentFrame.origin.x + stepWidth * i, contentFrame.size.height / 2.f);
+        trackCircle.position = CGPointMake(contentFrame.origin.x + stepWidth * i, CGRectGetMidY(contentFrame));
         
-        
+        trackLabel.position        = CGPointMake(contentFrame.origin.x + stepWidth * i, labelsY);
+        trackLabel.foregroundColor = self.labelColor.CGColor;
+    
         if (animated) {
             CGColorRef newColor = [self trackCircleColor:trackCircle];
             CGColorRef oldColor = trackCircle.fillColor;
@@ -278,7 +319,7 @@ void withoutCAAnimation(withoutAnimationBlock code)
 
 - (void)updateIndex
 {
-    NSAssert(self.maxCount > 1, @"_maxCount must be greater than 1!");
+    NSAssert(self.maxCount > 1, @"Elements count must be greater than 1!");
     if (_index > (self.maxCount - 1)) {
         _index = self.maxCount - 1;
         [self sendActionsForControlEvents:UIControlEventValueChanged];
@@ -394,33 +435,59 @@ void withoutCAAnimation(withoutAnimationBlock code)
 
 #pragma mark - Texts
 
-- (CATextLayer *)textLayerWithText:(NSString *)text
+- (CATextLayer *)textLayerWithSize:(CGSize)size index:(NSUInteger)index
 {
-    CATextLayer *textLayer = [CATextLayer layer];
-    
-    textLayer.foregroundColor = [UIColor whiteColor].CGColor;
-    textLayer.alignmentMode   = kCAAlignmentCenter;
-    textLayer.wrapped         = NO;
-    textLayer.contentsScale   = [UIScreen mainScreen].scale;
-    
-    UIFont *font         = [UIFont systemFontOfSize:15];
-    CFStringRef fontName = (__bridge CFStringRef)font.fontName;
-    CGFontRef fontRef    = CGFontCreateWithFontName(fontName);
-    
-    textLayer.font     = fontRef;
-    textLayer.fontSize = font.pointSize;
-    CGFontRelease(fontRef);
-    textLayer.string = text;
-    
-    return textLayer;
+    if (index >= _trackLabelsArray.count) {
+        CATextLayer *trackLabel = [CATextLayer layer];
+        
+        CGPoint anchorPoint = CGPointMake(0.5f, 0.f);
+        NSString *alignmentMode = kCAAlignmentCenter;
+        
+        if (self.adjustLabel) {
+            if (index == 0) {
+                alignmentMode = kCAAlignmentLeft;
+                size.width /= 2.f;
+                anchorPoint.x = maxRadius / size.width;
+            } else if (index == self.labels.count - 1) {
+                alignmentMode = kCAAlignmentRight;
+                size.width /= 2.f;
+                anchorPoint.x = 1.f - maxRadius / size.width;
+            }
+        }
+        
+        trackLabel.alignmentMode = alignmentMode;
+        trackLabel.wrapped       = YES;
+        trackLabel.contentsScale = [UIScreen mainScreen].scale;
+        trackLabel.anchorPoint   = anchorPoint;
+        
+        CFStringRef fontName = (__bridge CFStringRef)self.labelFont.fontName;
+        CGFontRef fontRef    = CGFontCreateWithFontName(fontName);
+        
+        trackLabel.font     = fontRef;
+        trackLabel.fontSize = self.labelFont.pointSize;
+        CGFontRelease(fontRef);
+        
+        trackLabel.string = self.labels[index];
+        trackLabel.bounds = CGRectMake(0.f, 0.f, size.width, size.height);
+        
+        [self.layer addSublayer:trackLabel];
+        [_trackLabelsArray addObject:trackLabel];
+        
+        return trackLabel;
+    } else {
+        return _trackLabelsArray[index];
+    }
+}
+
+- (void)removeLabelLayers
+{
+    for (CALayer *label in _trackLabelsArray) {
+        [label removeFromSuperlayer];
+    }
+    [_trackLabelsArray removeAllObjects];
 }
 
 #pragma mark - Access methods
-
-- (NSUInteger)elemenetsCount
-{
-    return self.labels.count > 0 ? self.labels.count : self.maxCount;
-}
 
 - (void)setIndex:(NSUInteger)index animated:(BOOL)animated
 {
@@ -434,13 +501,36 @@ void withoutCAAnimation(withoutAnimationBlock code)
     [self setNeedsLayout];
 }
 
-GENERATE_SETTER(index, NSUInteger, setIndex, [self sendActionsForControlEvents:UIControlEventValueChanged];);
+- (void)setLabels:(NSArray<NSString *> *)labels
+{
+    NSAssert(labels.count != 1, @"Labels count can not be equal to 1!");
+    if (_labels != labels) {
+        _labels = labels;
+        
+        if (_labels.count > 0) {
+            self.maxCount = _labels.count;
+        } else {
+            [self updateIndex];
+            [self setNeedsLayout];
+        }
+    }
+}
+
+GENERATE_SETTER(index, NSUInteger, setIndex, [self updateIndex]; [self sendActionsForControlEvents:UIControlEventValueChanged];);
 GENERATE_SETTER(maxCount, NSUInteger, setMaxCount, [self updateIndex];);
+
 GENERATE_SETTER(trackHeight, CGFloat, setTrackHeight, [self updateDiff];);
 GENERATE_SETTER(trackCircleRadius, CGFloat, setTrackCircleRadius, [self updateDiff]; [self updateMaxRadius];);
-GENERATE_SETTER(sliderCircleRadius, CGFloat, setSliderCircleRadius, [self updateMaxRadius];);
 GENERATE_SETTER(trackColor, UIColor*, setTrackColor, );
+
+GENERATE_SETTER(sliderCircleRadius, CGFloat, setSliderCircleRadius, [self updateMaxRadius];);
 GENERATE_SETTER(sliderCircleColor, UIColor*, setSliderCircleColor, );
 GENERATE_SETTER(sliderCircleImage, UIImage*, setSliderCircleImage, );
+
+GENERATE_SETTER(labelFont, UIFont*, setLabelFont, [self removeLabelLayers];);
+GENERATE_SETTER(labelColor, UIColor*, setLabelColor, );
+GENERATE_SETTER(labelOffset, CGFloat, setLabelOffset, );
+GENERATE_SETTER(labelOrientation, StepSliderTextOrientation, setLabelOrientation, );
+GENERATE_SETTER(adjustLabel, BOOL, setAdjustLabel, );
 
 @end
