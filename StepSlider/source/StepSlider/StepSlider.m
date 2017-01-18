@@ -109,6 +109,7 @@ void withoutCAAnimation(withoutAnimationBlock code)
     _sliderCircleColor  = [UIColor whiteColor];
     _labelOffset        = 20.f;
     _labelColor         = [UIColor whiteColor];
+    [self updateMaxRadius];
     
     [self setNeedsLayout];
 }
@@ -508,16 +509,24 @@ void withoutCAAnimation(withoutAnimationBlock code)
         _labels = labels;
         
         if (_labels.count > 0) {
-            self.maxCount = _labels.count;
-        } else {
-            [self updateIndex];
-            [self setNeedsLayout];
+            _maxCount = _labels.count;
         }
+        
+        [self updateIndex];
+        [self setNeedsLayout];
+    }
+}
+
+- (void)setMaxCount:(NSUInteger)maxCount
+{
+    if (_maxCount != maxCount && !self.labels.count) {
+        _maxCount = maxCount;
+        [self updateIndex];
+        [self setNeedsLayout];
     }
 }
 
 GENERATE_SETTER(index, NSUInteger, setIndex, [self updateIndex]; [self sendActionsForControlEvents:UIControlEventValueChanged];);
-GENERATE_SETTER(maxCount, NSUInteger, setMaxCount, [self updateIndex];);
 
 GENERATE_SETTER(trackHeight, CGFloat, setTrackHeight, [self updateDiff];);
 GENERATE_SETTER(trackCircleRadius, CGFloat, setTrackCircleRadius, [self updateDiff]; [self updateMaxRadius];);
