@@ -143,8 +143,14 @@ void withoutCAAnimation(withoutAnimationBlock code)
     
     contentSize = CGSizeMake(fmaxf(44.f, self.bounds.size.width), fmaxf(44.f, sliderHeightWithLabels));
     if (!CGSizeEqualToSize(self.bounds.size, contentSize)) {
-        [self invalidateIntrinsicContentSize];
-        return;
+        if (self.constraints.count) {
+            [self invalidateIntrinsicContentSize];
+            return;
+        } else {
+            CGRect newFrame = self.frame;
+            newFrame.size = contentSize;
+            self.frame = newFrame;
+        }
     }
     
     CGFloat contentFrameY = (self.bounds.size.height - sliderHeightWithLabels) / 2.f;
