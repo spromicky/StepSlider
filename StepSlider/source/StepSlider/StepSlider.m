@@ -145,7 +145,6 @@ void withoutCAAnimation(withoutAnimationBlock code)
     if (!CGSizeEqualToSize(self.bounds.size, contentSize)) {
         if (self.constraints.count) {
             [self invalidateIntrinsicContentSize];
-            return;
         } else {
             CGRect newFrame = self.frame;
             newFrame.size = contentSize;
