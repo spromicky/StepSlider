@@ -250,12 +250,12 @@ void withoutCAAnimation(withoutAnimationBlock code)
         }
         
         trackCircle.bounds   = CGRectMake(0.f, 0.f, circleFrameSide, circleFrameSide);
+        trackCircle.position = CGPointMake(contentFrame.origin.x + stepWidth * i, CGRectGetMidY(contentFrame));
         if (self.sliderTrackImage) {
             trackCircle.contents = (__bridge id)(self.sliderTrackImage.CGImage);
         } else {
-            trackCircle.path     = [UIBezierPath bezierPathWithRoundedRect:trackCircle.bounds cornerRadius:circleFrameSide / 2].CGPath;
+            trackCircle.path = [UIBezierPath bezierPathWithRoundedRect:trackCircle.bounds cornerRadius:circleFrameSide / 2].CGPath;
         }
-        trackCircle.position = CGPointMake(contentFrame.origin.x + stepWidth * i, CGRectGetMidY(contentFrame));
         
         trackLabel.position        = CGPointMake(contentFrame.origin.x + stepWidth * i, labelsY);
         trackLabel.foregroundColor = self.labelColor.CGColor;
