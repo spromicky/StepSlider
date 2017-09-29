@@ -54,6 +54,11 @@ IB_DESIGNABLE
 @property (nonatomic) IBInspectable CGFloat sliderCircleRadius;
 
 /**
+ *  Image for slider track dot.
+ */
+@property (nonatomic, strong) IBInspectable UIImage *sliderTrackImage;
+
+/**
  *  A Boolean value that determines whether user interaction with dots are ignored. Default value is `YES`.
  */
 @property (nonatomic, getter=isDotsInteractionEnabled) IBInspectable BOOL dotsInteractionEnabled;
