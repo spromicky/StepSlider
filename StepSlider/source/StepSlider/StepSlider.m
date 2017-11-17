@@ -132,16 +132,14 @@ void withoutCAAnimation(withoutAnimationBlock code)
     NSInteger indexDiff = fabsf(roundf([self indexCalculate]) - self.index);
     BOOL left = (roundf([self indexCalculate]) - self.index) < 0;
     
+    CGFloat contentWidth = self.bounds.size.width - 2 * maxRadius;
+    CGFloat stepWidth    = contentWidth / (self.maxCount - 1);
+    
     CGFloat sliderHeight = fmaxf(maxRadius, self.trackHeight / 2.f) * 2.f;
-    CGFloat sliderHeightWithLabels = sliderHeight;
-    CGFloat labelHeight = 0.f;
+    CGFloat labelsHeight = [self labelHeightWithMaxWidth:stepWidth] + self.labelOffset;
+    CGFloat totalHeight  = sliderHeight + labelsHeight;
     
-    if (self.labels.count) {
-        labelHeight = ceilf([@"jP" sizeWithAttributes:@{NSFontAttributeName : self.labelFont}].height);
-        sliderHeightWithLabels += labelHeight + self.labelOffset;
-    }
-    
-    contentSize = CGSizeMake(fmaxf(44.f, self.bounds.size.width), fmaxf(44.f, sliderHeightWithLabels));
+    contentSize = CGSizeMake(fmaxf(44.f, self.bounds.size.width), fmaxf(44.f, totalHeight));
     if (!CGSizeEqualToSize(self.bounds.size, contentSize)) {
         if (self.constraints.count) {
             [self invalidateIntrinsicContentSize];
@@ -152,25 +150,21 @@ void withoutCAAnimation(withoutAnimationBlock code)
         }
     }
     
-    CGFloat contentFrameY = (self.bounds.size.height - sliderHeightWithLabels) / 2.f;
+    CGFloat contentFrameY = (self.bounds.size.height - totalHeight) / 2.f;
     
     if (self.labelOrientation == StepSliderTextOrientationUp && self.labels.count) {
-        contentFrameY += labelHeight + self.labelOffset;
+        contentFrameY += labelsHeight;
     }
     
-    CGRect contentFrame = CGRectMake(maxRadius,
-                                     contentFrameY,
-                                     self.bounds.size.width - 2 * maxRadius,
-                                     sliderHeight);
+    CGRect contentFrame = CGRectMake(maxRadius, contentFrameY, contentWidth, sliderHeight);
     
-    CGFloat stepWidth       = contentFrame.size.width / (self.maxCount - 1);
     CGFloat circleFrameSide = self.trackCircleRadius * 2.f;
     CGFloat sliderDiameter  = self.sliderCircleRadius * 2.f;
     
     CGPoint oldPosition = _sliderCircleLayer.position;
     CGPathRef oldPath   = _trackLayer.path;
     
-    CGFloat labelsY     = self.labelOrientation ? (self.bounds.size.height - sliderHeightWithLabels) / 2.f : (CGRectGetMaxY(contentFrame) + self.labelOffset);
+    CGFloat labelsY     = self.labelOrientation ? (self.bounds.size.height - totalHeight) / 2.f : (CGRectGetMaxY(contentFrame) + self.labelOffset);
     
     if (!animated) {
         [CATransaction begin];
@@ -236,7 +230,7 @@ void withoutCAAnimation(withoutAnimationBlock code)
         CATextLayer *trackLabel;
         
         if (self.labels.count) {
-            trackLabel = [self textLayerWithSize:CGSizeMake(stepWidth, labelHeight) index:i];
+            trackLabel = [self textLayerWithSize:CGSizeMake(stepWidth, labelsHeight - self.labelOffset) index:i];
         }
         
         if (i < _trackCirclesArray.count) {
@@ -308,6 +302,31 @@ void withoutCAAnimation(withoutAnimationBlock code)
     }
     
     return layers;
+}
+
+- (CGFloat)labelHeightWithMaxWidth:(CGFloat)maxWidth
+{
+    if (self.labels.count) {
+        CGFloat labelHeight = 0.f;
+        CGFloat width = 0.f;
+        
+        for (NSUInteger i = 0; i < self.labels.count; i++) {
+            if (self.adjustLabel && (i == 0 || i == self.labels.count - 1)) {
+                width = maxWidth / 2.f + maxRadius;
+            } else {
+                width = maxWidth;
+            }
+            
+            CGFloat height = [self.labels[i] boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX)
+                                                          options:NSStringDrawingUsesLineFragmentOrigin
+                                                       attributes:@{NSFontAttributeName : self.labelFont}
+                                                          context:nil].size.height;
+            labelHeight = fmax(ceil(height), labelHeight);
+        }
+        return labelHeight;
+    }
+    
+    return 0;
 }
 
 /*
@@ -452,11 +471,11 @@ void withoutCAAnimation(withoutAnimationBlock code)
         if (self.adjustLabel) {
             if (index == 0) {
                 alignmentMode = kCAAlignmentLeft;
-                size.width /= 2.f;
+                size.width = size.width / 2.f + maxRadius;
                 anchorPoint.x = maxRadius / size.width;
             } else if (index == self.labels.count - 1) {
                 alignmentMode = kCAAlignmentRight;
-                size.width /= 2.f;
+                size.width = size.width / 2.f + maxRadius;
                 anchorPoint.x = 1.f - maxRadius / size.width;
             }
         }
@@ -518,6 +537,7 @@ void withoutCAAnimation(withoutAnimationBlock code)
         }
         
         [self updateIndex];
+        [self removeLabelLayers];
         [self setNeedsLayout];
     }
 }
