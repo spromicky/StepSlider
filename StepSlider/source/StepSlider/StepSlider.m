@@ -230,7 +230,7 @@ void withoutCAAnimation(withoutAnimationBlock code)
         CATextLayer *trackLabel;
         
         if (self.labels.count) {
-            trackLabel = [self textLayerWithSize:CGSizeMake(stepWidth, labelsHeight - self.labelOffset) index:i];
+            trackLabel = [self textLayerWithSize:CGSizeMake([self roundForTextDrawing:stepWidth], labelsHeight - self.labelOffset) index:i];
         }
         
         if (i < _trackCirclesArray.count) {
@@ -308,16 +308,16 @@ void withoutCAAnimation(withoutAnimationBlock code)
 {
     if (self.labels.count) {
         CGFloat labelHeight = 0.f;
-        CGFloat width = 0.f;
         
         for (NSUInteger i = 0; i < self.labels.count; i++) {
+            CGSize size;
             if (self.adjustLabel && (i == 0 || i == self.labels.count - 1)) {
-                width = maxWidth / 2.f + maxRadius;
+                size = CGSizeMake([self roundForTextDrawing:maxWidth / 2.f + maxRadius], CGFLOAT_MAX);
             } else {
-                width = maxWidth;
+                size = CGSizeMake([self roundForTextDrawing:maxWidth], CGFLOAT_MAX);
             }
             
-            CGFloat height = [self.labels[i] boundingRectWithSize:CGSizeMake(width, CGFLOAT_MAX)
+            CGFloat height = [self.labels[i] boundingRectWithSize:size
                                                           options:NSStringDrawingUsesLineFragmentOrigin
                                                        attributes:@{NSFontAttributeName : self.labelFont}
                                                           context:nil].size.height;
@@ -510,6 +510,11 @@ void withoutCAAnimation(withoutAnimationBlock code)
         [label removeFromSuperlayer];
     }
     [_trackLabelsArray removeAllObjects];
+}
+
+- (CGFloat)roundForTextDrawing:(CGFloat)value
+{
+    return floor(value * [UIScreen mainScreen].scale) / [UIScreen mainScreen].scale;
 }
 
 #pragma mark - Access methods
