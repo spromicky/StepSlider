@@ -102,6 +102,7 @@ void withoutCAAnimation(withoutAnimationBlock code)
     
     _maxCount           = 4;
     _index              = 2;
+    _colorDividerIndex  = 0;
     _trackHeight        = 4.f;
     _trackCircleRadius  = 5.f;
     _sliderCircleRadius = 12.5f;
@@ -354,8 +355,11 @@ void withoutCAAnimation(withoutAnimationBlock code)
 - (CGPathRef)fillingPath
 {
     CGRect fillRect     = _trackLayer.bounds;
-    fillRect.size.width = self.sliderPosition;
-    
+    if (self.colorDividerIndex > 0) {
+        fillRect.size.width = _trackLayer.bounds.size.width * (self.colorDividerIndex / (CGFloat)(self.maxCount - 1));
+    } else {
+        fillRect.size.width =  self.sliderPosition;
+    }
     return [UIBezierPath bezierPathWithRect:fillRect].CGPath;
 }
 
@@ -376,7 +380,13 @@ void withoutCAAnimation(withoutAnimationBlock code)
 
 - (CGColorRef)trackCircleColor:(CAShapeLayer *)trackCircle
 {
-    return self.sliderPosition + diff >= [self trackCirclePosition:trackCircle] ? self.tintColor.CGColor : self.trackColor.CGColor;
+    BOOL useTintColor;
+    if (self.colorDividerIndex > 0) {
+        useTintColor = (_trackLayer.bounds.size.width * (self.colorDividerIndex / (CGFloat)(self.maxCount - 1))) > [self trackCirclePosition:trackCircle];
+    } else {
+        useTintColor = self.sliderPosition + diff >= [self trackCirclePosition:trackCircle];
+    }
+    return useTintColor ? self.tintColor.CGColor : self.trackColor.CGColor;
 }
 
 #pragma mark - Touches
@@ -523,6 +533,11 @@ void withoutCAAnimation(withoutAnimationBlock code)
 {
     animateLayouts = animated;
     self.index = index;
+}
+
+- (void)setColorDividerIndex:(NSUInteger)colorDividerIndex {
+    _colorDividerIndex = colorDividerIndex;
+    [self setNeedsLayout];
 }
 
 - (void)setTintColor:(UIColor *)tintColor

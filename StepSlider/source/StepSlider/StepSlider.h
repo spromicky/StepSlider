@@ -37,6 +37,11 @@ IB_DESIGNABLE
  */
 @property (nonatomic) IBInspectable NSUInteger index;
 
+/**
+ *  Track and dots color based on custom index instead of current
+ */
+@property (nonatomic) IBInspectable NSUInteger colorDividerIndex;
+
 
 /**
  *  Height of the slider track.
