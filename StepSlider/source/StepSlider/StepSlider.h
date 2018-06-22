@@ -8,6 +8,12 @@
 
 #import <UIKit/UIKit.h>
 
+//! Project version number for StepSlider.
+FOUNDATION_EXPORT double StepSliderVersionNumber;
+
+//! Project version string for StepSlider.
+FOUNDATION_EXPORT const unsigned char StepSliderVersionString[];
+
 /**
  *  Vertical orientatons of dot labels.
  */

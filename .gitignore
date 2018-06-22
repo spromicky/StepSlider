@@ -25,11 +25,4 @@ xcuserdata
 profile
 *.moved-aside
 DerivedData
-
-#cocoapods
-depositphotos/Podfile.lock
-depositphotos/Pods/*
-
-#bash
-0
-depositphotos/depositphotos/.DS_Store
+Carthage/
