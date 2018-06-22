@@ -325,9 +325,18 @@
     self.sliderView.adjustLabel = sender.selected;
 }
 
-- (IBAction)changeSliderCircleImage:(UIButton *)sender{
+- (IBAction)changeSliderCircleImage:(UIButton *)sender
+{
     sender.selected = !sender.selected;
     self.sliderView.sliderCircleImage = sender.selected ? [UIImage imageNamed:@"thumb"] : nil;
+}
+
+
+- (IBAction)changeTrackCircleImage:(UIButton *)sender
+{
+    sender.selected = !sender.selected;
+    [self.sliderView setTrackCircleImage:sender.selected ? [UIImage imageNamed:@"unselected_dot"] : nil forState:UIControlStateNormal];
+    [self.sliderView setTrackCircleImage:sender.selected ? [UIImage imageNamed:@"selected_dot"] : nil forState:UIControlStateSelected];
 }
 
 @end

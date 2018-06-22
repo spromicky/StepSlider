@@ -54,11 +54,6 @@ IB_DESIGNABLE
 @property (nonatomic) IBInspectable CGFloat sliderCircleRadius;
 
 /**
- *  Image for slider track dot.
- */
-@property (nonatomic, strong) IBInspectable UIImage *sliderTrackImage;
-
-/**
  *  A Boolean value that determines whether user interaction with dots are ignored. Default value is `YES`.
  */
 @property (nonatomic, getter=isDotsInteractionEnabled) IBInspectable BOOL dotsInteractionEnabled;
@@ -120,5 +115,15 @@ IB_DESIGNABLE
  *  @param animated `YES` to animate changing of the `index` property.
  */
 - (void)setIndex:(NSUInteger)index animated:(BOOL)animated;
+
+
+/**
+ *  Sets the image to use for track circle for the specified state.
+ *  Currently supported only `UIControlStateNormal` and `UIControlStateSelected`.
+ *
+ *  @param image The image to use for the specified state.
+ *  @param state The state that uses the specified image.
+ */
+- (void)setTrackCircleImage:(UIImage *)image forState:(UIControlState)state;
 
 @end
