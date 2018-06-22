@@ -37,7 +37,7 @@ slider.labels = @[@"Some string", @"another string", @"one more"];
 
 `slider.adjustLabel` - set first and last label to exactly to frame left and right.
 
-####Images
+#### Images
 
 For `StepSlider 1.2.0` and higher you can use images for `sliderCircle ` and `trackCircles`. For `trackCircles` supported two states: `normal` and `selected`.
 
