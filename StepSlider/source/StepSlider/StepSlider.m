@@ -552,6 +552,8 @@ void withoutCAAnimation(withoutAnimationBlock code)
         trackLabel.fontSize = self.labelFont.pointSize;
         CGFontRelease(fontRef);
         
+        trackLabel.foregroundColor = self.labelColor.CGColor
+
         trackLabel.string = self.labels[index];
         trackLabel.bounds = CGRectMake(0.f, 0.f, size.width, size.height);
         
