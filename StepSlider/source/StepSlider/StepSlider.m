@@ -257,7 +257,8 @@ void withoutCAAnimation(withoutAnimationBlock code)
             trackCircle.path = NULL;
         }
 
-        trackLabel.position = CGPointMake(contentFrame.origin.x + stepWidth * i, labelsY);
+        trackLabel.position        = CGPointMake(contentFrame.origin.x + stepWidth * i, labelsY);
+        trackLabel.foregroundColor = self.labelColor.CGColor;
         
         if (animated) {
             if (trackCircleImage) {
