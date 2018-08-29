@@ -30,13 +30,12 @@ void withoutCAAnimation(withoutAnimationBlock code)
 
 @interface StepSlider ()
 {
-    CAShapeLayer *_trackLayer;
-    CAShapeLayer *_sliderCircleLayer;
     NSMutableArray <CAShapeLayer *> *_trackCirclesArray;
     NSMutableArray <CATextLayer *> *_trackLabelsArray;
     NSMutableDictionary <NSNumber *, UIImage *> *_trackCircleImages;
     
     BOOL animateLayouts;
+    BOOL firstTime;
     
     CGFloat maxRadius;
     CGFloat diff;
@@ -66,6 +65,7 @@ void withoutCAAnimation(withoutAnimationBlock code)
 {
     self = [super initWithFrame:frame];
     if (self) {
+        firstTime = true;
         [self generalSetup];
     }
     return self;
@@ -190,7 +190,7 @@ void withoutCAAnimation(withoutAnimationBlock code)
     }
     _sliderCircleLayer.position = CGPointMake(contentFrame.origin.x + stepWidth * self.index, CGRectGetMidY(contentFrame));
 
-    if (animated) {
+    if (!animated) {
         CABasicAnimation *basicSliderAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
         basicSliderAnimation.duration = [CATransaction animationDuration];
         basicSliderAnimation.fromValue = [NSValue valueWithCGPoint:(oldPosition)];
@@ -309,6 +309,13 @@ void withoutCAAnimation(withoutAnimationBlock code)
     
     [_sliderCircleLayer removeFromSuperlayer];
     [self.layer addSublayer:_sliderCircleLayer];
+    if (!firstTime){
+        [self sendActionsForControlEvents:UIControlEventEditingDidEnd];
+    }else{
+        firstTime = false;
+    }
+    
+
 }
 
 - (void)layoutSubviews

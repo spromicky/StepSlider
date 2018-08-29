@@ -112,6 +112,9 @@ IB_DESIGNABLE
  *  Otherwise label position is same as trackCircle, and aligment always is center.
  */
 @property (nonatomic) IBInspectable BOOL adjustLabel;
+@property (nonatomic)  CAShapeLayer *sliderCircleLayer;
+@property (nonatomic)  CAShapeLayer *trackLayer;
+
 
 
 /**
