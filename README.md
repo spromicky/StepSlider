@@ -25,9 +25,11 @@ StepSlider can be fully customised by any of this properties:
 - `sliderCircleColor`
 - `sliderCircleImage`
 
+Supports haptic feedback on `valueChanged:`.
+
 #### Labels
 
-From version 1.0.0 StepSlider support labels near each circle on track. 
+From version `1.0.0` StepSlider support labels near each circle on track. 
 
 ```objc
 slider.labels = @[@"Some string", @"another string", @"one more"];
@@ -39,7 +41,7 @@ slider.labels = @[@"Some string", @"another string", @"one more"];
 
 #### Images
 
-For `StepSlider 1.2.0` and higher you can use images for `sliderCircle ` and `trackCircles`. For `trackCircles` supported two states: `normal` and `selected`.
+For `1.2.0` and higher you can use images for `sliderCircle ` and `trackCircles`. For `trackCircles` supported two states: `normal` and `selected`.
 
 ```objc
 [self.sliderView setTrackCircleImage:[UIImage imageNamed:@"unselected_dot"] forState:UIControlStateNormal];
@@ -50,8 +52,8 @@ For `StepSlider 1.2.0` and higher you can use images for `sliderCircle ` and `tr
 
 ## Requirements
 
-- iOS 7.0+
-- Xcode 8
+- version `1.3.0` and above needs iOS 10.0+
+- version `1.2.1` supports iOS 7.0+
 
 ## Installation
 
@@ -60,7 +62,7 @@ For `StepSlider 1.2.0` and higher you can use images for `sliderCircle ` and `tr
 To integrate `StepSlider` into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```
-pod 'StepSlider', '~> 1.2.0'
+pod 'StepSlider', '~> 1.3.0'
 ```
 
 Then, run the following command:
@@ -74,7 +76,7 @@ $ pod install
 To integrate `StepSlider` into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```
-github "spromicky/StepSlider" ~> 1.2.0
+github "spromicky/StepSlider" ~> 1.3.0
 ```
 
 Run `carthage update` to build the framework and drag the built `StepSlider.framework` into your Xcode project.
