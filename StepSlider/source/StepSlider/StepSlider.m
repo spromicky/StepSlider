@@ -35,6 +35,8 @@ void withoutCAAnimation(withoutAnimationBlock code)
     NSMutableArray <CAShapeLayer *> *_trackCirclesArray;
     NSMutableArray <CATextLayer *> *_trackLabelsArray;
     NSMutableDictionary <NSNumber *, UIImage *> *_trackCircleImages;
+
+    UIImpactFeedbackGenerator* _selectFeedback;
     
     BOOL animateLayouts;
     
@@ -440,6 +442,11 @@ void withoutCAAnimation(withoutAnimationBlock code)
     startTouchPosition = [touch locationInView:self];
     startSliderPosition = _sliderCircleLayer.position;
 
+    if (self.enableHapticFeedback && ![[NSProcessInfo processInfo] isLowPowerModeEnabled]) {
+        _selectFeedback = [[UIImpactFeedbackGenerator alloc] init];
+    }
+
+    [_selectFeedback prepare];
     if (CGRectContainsPoint(_sliderCircleLayer.frame, startTouchPosition)) {
         return YES;
     } else if (self.isDotsInteractionEnabled) {
@@ -456,6 +463,8 @@ void withoutCAAnimation(withoutAnimationBlock code)
                 
                 if (oldIndex != _index) {
                     [self sendActionsForControlEvents:UIControlEventValueChanged];
+                    [_selectFeedback impactOccurred];
+                    [_selectFeedback prepare];
                 }
                 animateLayouts = YES;
                 [self setNeedsLayout];
@@ -489,6 +498,8 @@ void withoutCAAnimation(withoutAnimationBlock code)
             }
             self->_index = index;
             [self sendActionsForControlEvents:UIControlEventValueChanged];
+            [self->_selectFeedback impactOccurred];
+            [self->_selectFeedback prepare];
         }
     });
     
@@ -516,6 +527,7 @@ void withoutCAAnimation(withoutAnimationBlock code)
     
     animateLayouts = YES;
     [self setNeedsLayout];
+    _selectFeedback = nil;
 }
 
 #pragma mark - Texts

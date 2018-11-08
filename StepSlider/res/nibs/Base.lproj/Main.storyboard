@@ -1,12 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14113" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="14313.18" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" useSafeAreas="YES" colorMatched="YES" initialViewController="BYZ-38-t0r">
     <device id="retina4_7" orientation="portrait">
         <adaptation id="fullscreen"/>
     </device>
     <dependencies>
         <deployment identifier="iOS"/>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14088"/>
-        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="14283.14"/>
+        <capability name="Safe area layout guides" minToolsVersion="9.0"/>
         <capability name="documents saved in the Xcode 8 format" minToolsVersion="8.0"/>
     </dependencies>
     <scenes>
@@ -14,16 +14,12 @@
         <scene sceneID="tne-QT-ifu">
             <objects>
                 <viewController id="BYZ-38-t0r" customClass="ViewController" sceneMemberID="viewController">
-                    <layoutGuides>
-                        <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
-                        <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
-                    </layoutGuides>
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="375" height="667"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="dNa-lq-0iy" customClass="StepSlider">
-                                <rect key="frame" x="16" y="58" width="343" height="44"/>
+                                <rect key="frame" x="16" y="58" width="343" height="45"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="calibratedWhite"/>
                                 <color key="tintColor" red="0.50588235294117645" green="0.63137254901960782" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <userDefinedRuntimeAttributes>
@@ -60,7 +56,7 @@
                                 </connections>
                             </view>
                             <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Label" textAlignment="center" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="KDz-eV-f0y">
-                                <rect key="frame" x="166.5" y="125" width="42" height="21"/>
+                                <rect key="frame" x="166.5" y="126" width="42" height="21"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="21" id="BCC-mi-iIc"/>
                                 </constraints>
@@ -68,172 +64,185 @@
                                 <color key="textColor" red="0.56470588235294117" green="0.81960784313725488" blue="0.46666666666666667" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                                 <nil key="highlightedColor"/>
                             </label>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="eYk-9l-jGe">
-                                <rect key="frame" x="56" y="182" width="263" height="126"/>
+                            <stackView opaque="NO" contentMode="scaleToFill" alignment="top" spacing="14" translatesAutoresizingMaskIntoConstraints="NO" id="sMU-D0-bCf">
+                                <rect key="frame" x="59" y="183" width="257" height="120"/>
                                 <subviews>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4mV-vZ-SJb">
-                                        <rect key="frame" x="8" y="8" width="46" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="tintColor" red="0.50588235294117645" green="0.63137254901960782" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="Index"/>
-                                        <connections>
-                                            <action selector="changeIndex:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Tm6-nl-xBw"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q34-Hh-Tqu">
-                                        <rect key="frame" x="8" y="98" width="46" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="tintColor" red="0.50588235290000005" green="0.63137254899999995" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="TCI"/>
-                                        <connections>
-                                            <action selector="changeTrackCircleImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gbz-0e-cPB"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zc0-sy-Hh0">
-                                        <rect key="frame" x="62" y="10" width="46" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="tintColor" red="0.50588235294117645" green="0.63137254901960782" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="Max"/>
-                                        <connections>
-                                            <action selector="changeMaxIndex:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hUf-9X-oUR"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="orR-ME-wWN">
-                                        <rect key="frame" x="8" y="68" width="46" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="tintColor" red="0.50588235294117645" green="0.63137254901960782" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="SC"/>
-                                        <connections>
-                                            <action selector="changeSliderCircleColor:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ume-mB-I50"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HqD-eV-ahe">
-                                        <rect key="frame" x="8" y="38" width="46" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="tintColor" red="0.50588235294117645" green="0.63137254901960782" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="TC"/>
-                                        <connections>
-                                            <action selector="changeTrackColor:" destination="BYZ-38-t0r" eventType="touchUpInside" id="y2m-88-3Uf"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iqU-D8-V5O">
-                                        <rect key="frame" x="62" y="68" width="46" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="tintColor" red="0.50588235294117645" green="0.63137254901960782" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="SR"/>
-                                        <connections>
-                                            <action selector="changeSliderCircleRadius:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HG8-lF-SHi"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ho3-LO-mVi">
-                                        <rect key="frame" x="116" y="38" width="46" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="tintColor" red="0.50588235294117645" green="0.63137254901960782" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="TH"/>
-                                        <connections>
-                                            <action selector="changeTrackHeight:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YFp-dv-OQx"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0eP-fn-RGP">
-                                        <rect key="frame" x="116" y="10" width="46" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="tintColor" red="0.50588235294117645" green="0.63137254901960782" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="Tint"/>
-                                        <connections>
-                                            <action selector="changeTintColor:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GIx-XZ-4nB"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WLs-Tx-TBB">
-                                        <rect key="frame" x="62" y="38" width="46" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="tintColor" red="0.50588235294117645" green="0.63137254901960782" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="TCR"/>
-                                        <connections>
-                                            <action selector="changeTrackCircleRaidus:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4Wr-At-mds"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bcv-LO-iYL">
-                                        <rect key="frame" x="116" y="68" width="46" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="tintColor" red="0.50588235290000005" green="0.63137254899999995" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="SCI"/>
-                                        <connections>
-                                            <action selector="changeSliderCircleImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6Lr-4Y-VSo"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WyS-bg-BU0">
-                                        <rect key="frame" x="170" y="8" width="46" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="tintColor" red="0.50588235290000005" green="0.63137254899999995" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="Labels"/>
-                                        <connections>
-                                            <action selector="toggleLabels:" destination="BYZ-38-t0r" eventType="touchUpInside" id="l3q-hY-GA0"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ET6-SO-fSo">
-                                        <rect key="frame" x="170" y="38" width="46" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="tintColor" red="0.50588235290000005" green="0.63137254899999995" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="LFont"/>
-                                        <connections>
-                                            <action selector="changeLabelsFont:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SHQ-Jx-43T"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wVo-Ug-dIE">
-                                        <rect key="frame" x="170" y="68" width="46" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="tintColor" red="0.50588235290000005" green="0.63137254899999995" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="LColor"/>
-                                        <connections>
-                                            <action selector="changeLabelsColor:" destination="BYZ-38-t0r" eventType="touchUpInside" id="naW-SC-rSc"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gv7-LK-flC">
-                                        <rect key="frame" x="224" y="8" width="46" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="tintColor" red="0.50588235290000005" green="0.63137254899999995" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="Offset"/>
-                                        <connections>
-                                            <action selector="changeLabelsOffset:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AqB-HJ-CjH"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vJq-Pf-dSB">
-                                        <rect key="frame" x="224" y="38" width="46" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="tintColor" red="0.50588235290000005" green="0.63137254899999995" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="LVO"/>
-                                        <connections>
-                                            <action selector="changeLabelsOrientation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8TE-XJ-IEx"/>
-                                        </connections>
-                                    </button>
-                                    <button opaque="NO" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="epv-Xm-NHy">
-                                        <rect key="frame" x="224" y="68" width="46" height="30"/>
-                                        <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                        <color key="tintColor" red="0.50588235290000005" green="0.63137254899999995" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
-                                        <state key="normal" title="Adjust"/>
-                                        <connections>
-                                            <action selector="adjustLabels:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HEv-jo-fvy"/>
-                                        </connections>
-                                    </button>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="bGP-vz-ogK">
+                                        <rect key="frame" x="0.0" y="0.0" width="37" height="120"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="4mV-vZ-SJb">
+                                                <rect key="frame" x="0.0" y="0.0" width="37" height="30"/>
+                                                <color key="tintColor" red="0.50588235294117645" green="0.63137254901960782" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="Index"/>
+                                                <connections>
+                                                    <action selector="changeIndex:" destination="BYZ-38-t0r" eventType="touchUpInside" id="Tm6-nl-xBw"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="HqD-eV-ahe">
+                                                <rect key="frame" x="0.0" y="30" width="37" height="30"/>
+                                                <color key="tintColor" red="0.50588235294117645" green="0.63137254901960782" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="TC"/>
+                                                <connections>
+                                                    <action selector="changeTrackColor:" destination="BYZ-38-t0r" eventType="touchUpInside" id="y2m-88-3Uf"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="orR-ME-wWN">
+                                                <rect key="frame" x="0.0" y="60" width="37" height="30"/>
+                                                <color key="tintColor" red="0.50588235294117645" green="0.63137254901960782" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="SC"/>
+                                                <connections>
+                                                    <action selector="changeSliderCircleColor:" destination="BYZ-38-t0r" eventType="touchUpInside" id="ume-mB-I50"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="q34-Hh-Tqu">
+                                                <rect key="frame" x="0.0" y="90" width="37" height="30"/>
+                                                <color key="tintColor" red="0.50588235290000005" green="0.63137254899999995" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="TCI"/>
+                                                <connections>
+                                                    <action selector="changeTrackCircleImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="gbz-0e-cPB"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="FEN-lM-Ko9">
+                                        <rect key="frame" x="51" y="0.0" width="45" height="120"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="zc0-sy-Hh0">
+                                                <rect key="frame" x="0.0" y="0.0" width="45" height="30"/>
+                                                <color key="tintColor" red="0.50588235294117645" green="0.63137254901960782" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="Max"/>
+                                                <connections>
+                                                    <action selector="changeMaxIndex:" destination="BYZ-38-t0r" eventType="touchUpInside" id="hUf-9X-oUR"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WLs-Tx-TBB">
+                                                <rect key="frame" x="0.0" y="30" width="45" height="30"/>
+                                                <color key="tintColor" red="0.50588235294117645" green="0.63137254901960782" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="TCR"/>
+                                                <connections>
+                                                    <action selector="changeTrackCircleRaidus:" destination="BYZ-38-t0r" eventType="touchUpInside" id="4Wr-At-mds"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="iqU-D8-V5O">
+                                                <rect key="frame" x="0.0" y="60" width="45" height="30"/>
+                                                <color key="tintColor" red="0.50588235294117645" green="0.63137254901960782" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="SR"/>
+                                                <connections>
+                                                    <action selector="changeSliderCircleRadius:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HG8-lF-SHi"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="gXv-hc-XU2">
+                                                <rect key="frame" x="0.0" y="90" width="45" height="30"/>
+                                                <color key="tintColor" red="0.50588235290000005" green="0.63137254899999995" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="Haptic"/>
+                                                <connections>
+                                                    <action selector="enableHaptic:" destination="BYZ-38-t0r" eventType="touchUpInside" id="dhI-66-toC"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="ie9-LF-e5k">
+                                        <rect key="frame" x="110" y="0.0" width="30" height="90"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="0eP-fn-RGP">
+                                                <rect key="frame" x="0.0" y="0.0" width="30" height="30"/>
+                                                <color key="tintColor" red="0.50588235294117645" green="0.63137254901960782" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="Tint"/>
+                                                <connections>
+                                                    <action selector="changeTintColor:" destination="BYZ-38-t0r" eventType="touchUpInside" id="GIx-XZ-4nB"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ho3-LO-mVi">
+                                                <rect key="frame" x="0.0" y="30" width="30" height="30"/>
+                                                <color key="tintColor" red="0.50588235294117645" green="0.63137254901960782" blue="0.74509803921568629" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="TH"/>
+                                                <connections>
+                                                    <action selector="changeTrackHeight:" destination="BYZ-38-t0r" eventType="touchUpInside" id="YFp-dv-OQx"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Bcv-LO-iYL">
+                                                <rect key="frame" x="0.0" y="60" width="30" height="30"/>
+                                                <color key="tintColor" red="0.50588235290000005" green="0.63137254899999995" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="SCI"/>
+                                                <connections>
+                                                    <action selector="changeSliderCircleImage:" destination="BYZ-38-t0r" eventType="touchUpInside" id="6Lr-4Y-VSo"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="eY8-ns-njh">
+                                        <rect key="frame" x="154" y="0.0" width="45" height="90"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="WyS-bg-BU0">
+                                                <rect key="frame" x="0.0" y="0.0" width="45" height="30"/>
+                                                <color key="tintColor" red="0.50588235290000005" green="0.63137254899999995" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="Labels"/>
+                                                <connections>
+                                                    <action selector="toggleLabels:" destination="BYZ-38-t0r" eventType="touchUpInside" id="l3q-hY-GA0"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="ET6-SO-fSo">
+                                                <rect key="frame" x="0.0" y="30" width="45" height="30"/>
+                                                <color key="tintColor" red="0.50588235290000005" green="0.63137254899999995" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="LFont"/>
+                                                <connections>
+                                                    <action selector="changeLabelsFont:" destination="BYZ-38-t0r" eventType="touchUpInside" id="SHQ-Jx-43T"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="wVo-Ug-dIE">
+                                                <rect key="frame" x="0.0" y="60" width="45" height="30"/>
+                                                <color key="tintColor" red="0.50588235290000005" green="0.63137254899999995" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="LColor"/>
+                                                <connections>
+                                                    <action selector="changeLabelsColor:" destination="BYZ-38-t0r" eventType="touchUpInside" id="naW-SC-rSc"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
+                                    <stackView opaque="NO" contentMode="scaleToFill" axis="vertical" translatesAutoresizingMaskIntoConstraints="NO" id="MAF-yN-jAR">
+                                        <rect key="frame" x="213" y="0.0" width="44" height="90"/>
+                                        <subviews>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="Gv7-LK-flC">
+                                                <rect key="frame" x="0.0" y="0.0" width="44" height="30"/>
+                                                <color key="tintColor" red="0.50588235290000005" green="0.63137254899999995" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="Offset"/>
+                                                <connections>
+                                                    <action selector="changeLabelsOffset:" destination="BYZ-38-t0r" eventType="touchUpInside" id="AqB-HJ-CjH"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="vJq-Pf-dSB">
+                                                <rect key="frame" x="0.0" y="30" width="44" height="30"/>
+                                                <color key="tintColor" red="0.50588235290000005" green="0.63137254899999995" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="LVO"/>
+                                                <connections>
+                                                    <action selector="changeLabelsOrientation:" destination="BYZ-38-t0r" eventType="touchUpInside" id="8TE-XJ-IEx"/>
+                                                </connections>
+                                            </button>
+                                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="epv-Xm-NHy">
+                                                <rect key="frame" x="0.0" y="60" width="44" height="30"/>
+                                                <color key="tintColor" red="0.50588235290000005" green="0.63137254899999995" blue="0.74509803919999995" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                                                <state key="normal" title="Adjust"/>
+                                                <connections>
+                                                    <action selector="adjustLabels:" destination="BYZ-38-t0r" eventType="touchUpInside" id="HEv-jo-fvy"/>
+                                                </connections>
+                                            </button>
+                                        </subviews>
+                                    </stackView>
                                 </subviews>
-                                <color key="backgroundColor" red="0.0" green="0.0" blue="0.0" alpha="0.0" colorSpace="custom" customColorSpace="sRGB"/>
-                                <constraints>
-                                    <constraint firstAttribute="width" constant="263" id="hkw-Ta-jKv"/>
-                                    <constraint firstAttribute="height" constant="126" id="pSi-Rf-MEG"/>
-                                </constraints>
-                            </view>
+                            </stackView>
                         </subviews>
                         <color key="backgroundColor" red="0.12549019607843137" green="0.14117647058823529" blue="0.1764705882352941" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="dNa-lq-0iy" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" id="4od-tT-3Hh"/>
                             <constraint firstItem="KDz-eV-f0y" firstAttribute="top" secondItem="dNa-lq-0iy" secondAttribute="bottom" constant="23" id="6U4-gh-3zH"/>
-                            <constraint firstItem="eYk-9l-jGe" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="7HR-Qc-nQ7"/>
                             <constraint firstItem="dNa-lq-0iy" firstAttribute="trailing" secondItem="8bC-Xf-vdC" secondAttribute="trailingMargin" id="U7f-6q-4FR"/>
-                            <constraint firstItem="dNa-lq-0iy" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="h2u-MW-E6t"/>
-                            <constraint firstItem="KDz-eV-f0y" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="rpT-7c-Tdy"/>
-                            <constraint firstItem="dNa-lq-0iy" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="38" id="vEx-5n-x5m"/>
-                            <constraint firstItem="eYk-9l-jGe" firstAttribute="top" secondItem="KDz-eV-f0y" secondAttribute="bottom" constant="36" id="vPe-tE-XHF"/>
+                            <constraint firstItem="dNa-lq-0iy" firstAttribute="centerX" secondItem="6xx-5E-i2k" secondAttribute="centerX" id="h2u-MW-E6t"/>
+                            <constraint firstItem="KDz-eV-f0y" firstAttribute="centerX" secondItem="6xx-5E-i2k" secondAttribute="centerX" id="rpT-7c-Tdy"/>
+                            <constraint firstItem="dNa-lq-0iy" firstAttribute="top" secondItem="6xx-5E-i2k" secondAttribute="top" constant="38" id="vEx-5n-x5m"/>
+                            <constraint firstItem="sMU-D0-bCf" firstAttribute="centerX" secondItem="6xx-5E-i2k" secondAttribute="centerX" id="xtc-vv-fLE"/>
+                            <constraint firstItem="sMU-D0-bCf" firstAttribute="top" secondItem="KDz-eV-f0y" secondAttribute="bottom" constant="36" id="zVq-fN-pCY"/>
                         </constraints>
+                        <viewLayoutGuide key="safeArea" id="6xx-5E-i2k"/>
                     </view>
                     <connections>
                         <outlet property="label" destination="KDz-eV-f0y" id="Cms-Af-bjf"/>

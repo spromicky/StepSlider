@@ -113,6 +113,12 @@ IB_DESIGNABLE
  */
 @property (nonatomic) IBInspectable BOOL adjustLabel;
 
+/**
+ *  Generate haptic feedback when value was changed. Ignored if low power mode is turned on.
+ *  Default value is `false`.
+ */
+@property (nonatomic) IBInspectable BOOL enableHapticFeedback;
+
 
 /**
  *  Set the `index` property to parameter value.

@@ -339,4 +339,10 @@
     [self.sliderView setTrackCircleImage:sender.selected ? [UIImage imageNamed:@"selected_dot"] : nil forState:UIControlStateSelected];
 }
 
+- (IBAction)enableHaptic:(UIButton *)sender
+{
+    sender.selected = !sender.selected;
+    self.sliderView.enableHapticFeedback = sender.selected;
+}
+
 @end
