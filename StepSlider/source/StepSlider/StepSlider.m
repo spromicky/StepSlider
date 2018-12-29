@@ -55,19 +55,11 @@ void withoutCAAnimation(withoutAnimationBlock code)
 
 #pragma mark - Init
 
-- (instancetype)init
-{
-    self = [super init];
-    if (self) {
-        [self generalSetup];
-    }
-    return self;
-}
-
 - (instancetype)initWithFrame:(CGRect)frame
 {
     self = [super initWithFrame:frame];
     if (self) {
+        _index = 2;
         [self generalSetup];
     }
     return self;
@@ -77,7 +69,7 @@ void withoutCAAnimation(withoutAnimationBlock code)
 {
     self = [super initWithCoder:aDecoder];
     if (self) {
-        [self addLayers];
+        [self generalSetup];
     }
     return self;
 }
@@ -104,17 +96,32 @@ void withoutCAAnimation(withoutAnimationBlock code)
 {
     [self addLayers];
     
-    _maxCount           = 4;
-    _index              = 2;
-    _trackHeight        = 4.f;
-    _trackCircleRadius  = 5.f;
-    _sliderCircleRadius = 12.5f;
-    _trackColor         = [UIColor colorWithWhite:0.41f alpha:1.f];
-    _sliderCircleColor  = [UIColor whiteColor];
-    _labelOffset        = 20.f;
-    _labelColor         = [UIColor whiteColor];
+    if (_maxCount == 0) {
+        _maxCount = 4;
+    }
+    if (_trackHeight == 0.f) {
+        _trackHeight = 4.f;
+    }
+    if (_trackCircleRadius == 0.f) {
+        _trackCircleRadius = 5.f;
+    }
+    if (_sliderCircleRadius == 0.f) {
+        _sliderCircleRadius = 12.5f;
+    }
+    if (_labelOffset == 0.f) {
+        _labelOffset = 20.f;
+    }
+    if (!_trackColor) {
+        _trackColor = [UIColor colorWithWhite:0.41f alpha:1.f];
+    }
+    if (!_sliderCircleColor) {
+        _sliderCircleColor = [UIColor whiteColor];
+    }
+    if (!_labelColor) {
+        _labelColor = [UIColor whiteColor];
+    }
+
     [self updateMaxRadius];
-    
     [self setNeedsLayout];
 }
 
