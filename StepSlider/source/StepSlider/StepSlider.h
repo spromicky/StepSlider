@@ -39,9 +39,9 @@ IB_DESIGNABLE
 @property (nonatomic) IBInspectable NSUInteger maxCount;
 
 /**
- *  Currnet selected dot index.
+ *  Currnet selected dot index. If index < 0 then slider is unselected.
  */
-@property (nonatomic) IBInspectable NSUInteger index;
+@property (nonatomic) IBInspectable NSInteger index;
 
 
 /**
@@ -117,10 +117,10 @@ IB_DESIGNABLE
 /**
  *  Set the `index` property to parameter value.
  *
- *  @param index    The index, that you wanna to be selected.
+ *  @param index    The index, that you wanna to be selected. If index < 0 then slider will be unselected.
  *  @param animated `YES` to animate changing of the `index` property.
  */
-- (void)setIndex:(NSUInteger)index animated:(BOOL)animated;
+- (void)setIndex:(NSInteger)index animated:(BOOL)animated;
 
 
 /**
