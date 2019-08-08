@@ -197,7 +197,7 @@ void withoutCAAnimation(withoutAnimationBlock code)
         _sliderCircleLayer.path      = [UIBezierPath bezierPathWithRoundedRect:sliderDrawRect cornerRadius:sliderFrameSide / 2].CGPath;
         _sliderCircleLayer.fillColor = [self.sliderCircleColor CGColor];
     }
-    CGFloat sliderX = contentFrame.origin.x + (_index > -1 ? stepWidth * _index : -1.0);
+    CGFloat sliderX = contentFrame.origin.x + (_index > -1 ? stepWidth * _index : -1.0 * diff - 0.1);
     _sliderCircleLayer.position = CGPointMake(sliderX, CGRectGetMidY(contentFrame));
 
     if (animated) {
