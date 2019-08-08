@@ -197,7 +197,8 @@ void withoutCAAnimation(withoutAnimationBlock code)
         _sliderCircleLayer.path      = [UIBezierPath bezierPathWithRoundedRect:sliderDrawRect cornerRadius:sliderFrameSide / 2].CGPath;
         _sliderCircleLayer.fillColor = [self.sliderCircleColor CGColor];
     }
-    _sliderCircleLayer.position = CGPointMake(contentFrame.origin.x + stepWidth * self.index, CGRectGetMidY(contentFrame));
+    CGFloat sliderX = contentFrame.origin.x + (_index > -1 ? stepWidth * _index : -1.0);
+    _sliderCircleLayer.position = CGPointMake(sliderX, CGRectGetMidY(contentFrame));
 
     if (animated) {
         CABasicAnimation *basicSliderAnimation = [CABasicAnimation animationWithKeyPath:@"position"];
@@ -318,6 +319,7 @@ void withoutCAAnimation(withoutAnimationBlock code)
     
     [_sliderCircleLayer removeFromSuperlayer];
     [self.layer addSublayer:_sliderCircleLayer];
+    [_sliderCircleLayer setHidden: _index < 0];
 }
 
 - (void)layoutSubviews
@@ -385,7 +387,7 @@ void withoutCAAnimation(withoutAnimationBlock code)
 - (void)updateIndex
 {
     NSAssert(self.maxCount > 1, @"Elements count must be greater than 1!");
-    if (_index > (self.maxCount - 1)) {
+    if (_index > (NSInteger)_maxCount - 1) {
         _index = self.maxCount - 1;
         [self sendActionsForControlEvents:UIControlEventValueChanged];
     }
@@ -598,7 +600,7 @@ void withoutCAAnimation(withoutAnimationBlock code)
 
 #pragma mark - Access methods
 
-- (void)setIndex:(NSUInteger)index animated:(BOOL)animated
+- (void)setIndex:(NSInteger)index animated:(BOOL)animated
 {
     animateLayouts = animated;
     self.index = index;
@@ -635,7 +637,7 @@ void withoutCAAnimation(withoutAnimationBlock code)
     }
 }
 
-GENERATE_SETTER(index, NSUInteger, setIndex, [self updateIndex]; [self sendActionsForControlEvents:UIControlEventValueChanged];);
+GENERATE_SETTER(index, NSInteger, setIndex, [self updateIndex]; [self sendActionsForControlEvents:UIControlEventValueChanged];);
 
 GENERATE_SETTER(trackHeight, CGFloat, setTrackHeight, [self updateDiff];);
 GENERATE_SETTER(trackCircleRadius, CGFloat, setTrackCircleRadius, [self updateDiff]; [self updateMaxRadius];);
