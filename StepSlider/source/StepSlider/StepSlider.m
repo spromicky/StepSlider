@@ -443,6 +443,16 @@ void withoutCAAnimation(withoutAnimationBlock code)
 
 #pragma mark - Touches
 
+- (BOOL)gestureRecognizerShouldBegin:(UIGestureRecognizer *)gestureRecognizer
+{
+    if (![gestureRecognizer isKindOfClass:[UIPanGestureRecognizer class]]) {
+        return NO;
+    } else {
+        CGPoint position = [gestureRecognizer locationInView:self];
+        return !CGRectContainsPoint(self.bounds, position);
+    }
+}
+
 - (BOOL)beginTrackingWithTouch:(UITouch *)touch withEvent:(UIEvent *)event
 {
     startTouchPosition = [touch locationInView:self];
