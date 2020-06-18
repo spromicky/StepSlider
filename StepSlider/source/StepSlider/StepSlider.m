@@ -173,7 +173,8 @@ void withoutCAAnimation(withoutAnimationBlock code)
     CGFloat sliderDiameter  = self.sliderCircleRadius * 2.f;
     
     CGPoint oldPosition = _sliderCircleLayer.position;
-    CGPathRef oldPath   = _trackLayer.path;
+    CAShapeLayer * trackLayerCopy = [NSKeyedUnarchiver unarchiveObjectWithData:[NSKeyedArchiver archivedDataWithRootObject:_trackLayer]];
+    CGPathRef oldPath   = trackLayerCopy.path;
     
     CGFloat labelsY     = self.labelOrientation ? (self.bounds.size.height - totalHeight) / 2.f : (CGRectGetMaxY(contentFrame) + self.labelOffset);
     
