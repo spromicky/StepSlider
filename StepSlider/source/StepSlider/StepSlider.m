@@ -84,6 +84,7 @@ void withoutCAAnimation(withoutAnimationBlock code)
     _trackLayer = [CAShapeLayer layer];
     _sliderCircleLayer = [CAShapeLayer layer];
     _sliderCircleLayer.contentsScale = [UIScreen mainScreen].scale;
+    _sliderCircleLayer.actions = @{@"contents": [NSNull null]};
 
     [self.layer addSublayer:_sliderCircleLayer];
     [self.layer addSublayer:_trackLayer];
@@ -183,10 +184,9 @@ void withoutCAAnimation(withoutAnimationBlock code)
         [CATransaction setValue:(id)kCFBooleanTrue forKey:kCATransactionDisableActions];
     }
 
-    _sliderCircleLayer.path     = NULL;
-    _sliderCircleLayer.contents = nil;
 
     if (self.sliderCircleImage) {
+        _sliderCircleLayer.path     = NULL;
         _sliderCircleLayer.frame    = CGRectMake(0.f, 0.f, fmaxf(self.sliderCircleImage.size.width, 44.f), fmaxf(self.sliderCircleImage.size.height, 44.f));
         _sliderCircleLayer.contents = (__bridge id)self.sliderCircleImage.CGImage;
         _sliderCircleLayer.contentsGravity = kCAGravityCenter;
@@ -194,6 +194,7 @@ void withoutCAAnimation(withoutAnimationBlock code)
         CGFloat sliderFrameSide = fmaxf(self.sliderCircleRadius * 2.f, 44.f);
         CGRect  sliderDrawRect  = CGRectMake((sliderFrameSide - sliderDiameter) / 2.f, (sliderFrameSide - sliderDiameter) / 2.f, sliderDiameter, sliderDiameter);
         
+        _sliderCircleLayer.contents  = nil;
         _sliderCircleLayer.frame     = CGRectMake(0.f, 0.f, sliderFrameSide, sliderFrameSide);
         _sliderCircleLayer.path      = [UIBezierPath bezierPathWithRoundedRect:sliderDrawRect cornerRadius:sliderFrameSide / 2].CGPath;
         _sliderCircleLayer.fillColor = [self.sliderCircleColor CGColor];
@@ -249,7 +250,8 @@ void withoutCAAnimation(withoutAnimationBlock code)
             trackCircle = _trackCirclesArray[i];
         } else {
             trackCircle = [CAShapeLayer layer];
-            trackCircle.actions = @{@"fillColor": [NSNull null]};
+            trackCircle.actions = @{@"fillColor": [NSNull null],
+                                    @"contents": [NSNull null]};
             
             [self.layer addSublayer:trackCircle];
             
