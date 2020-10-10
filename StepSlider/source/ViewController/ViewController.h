@@ -7,7 +7,7 @@
 //
 
 #import <UIKit/UIKit.h>
-#import <StepSlider/StepSlider.h>
+#import "StepSlider.h"
 
 @interface ViewController : UIViewController
 

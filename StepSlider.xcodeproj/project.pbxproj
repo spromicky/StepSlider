@@ -13,11 +13,11 @@
 		01C688631BCF98C400DB7828 /* ViewController.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C688621BCF98C400DB7828 /* ViewController.m */; };
 		01C688661BCF98C400DB7828 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01C688641BCF98C400DB7828 /* Main.storyboard */; };
 		01C6886B1BCF98C400DB7828 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = 01C688691BCF98C400DB7828 /* LaunchScreen.storyboard */; };
+		427BAD3D253252E00057EE3E /* StepSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = 427BAD3C253252E00057EE3E /* StepSlider.h */; };
+		427BAD40253252E80057EE3E /* StepSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 427BAD3F253252E80057EE3E /* StepSlider.m */; };
 		42F0F56E20DD111B0046AF6D /* StepSlider.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F0F56720DD111B0046AF6D /* StepSlider.framework */; };
 		42F0F56F20DD111C0046AF6D /* StepSlider.framework in Embed Frameworks */ = {isa = PBXBuildFile; fileRef = 42F0F56720DD111B0046AF6D /* StepSlider.framework */; settings = {ATTRIBUTES = (CodeSignOnCopy, RemoveHeadersOnCopy, ); }; };
 		42F0F57620DD11270046AF6D /* UIKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = 42F0F57520DD11270046AF6D /* UIKit.framework */; };
-		42F0F57920DD116A0046AF6D /* StepSlider.m in Sources */ = {isa = PBXBuildFile; fileRef = 01C688741BCF995F00DB7828 /* StepSlider.m */; };
-		42F0F57C20DD16460046AF6D /* StepSlider.h in Headers */ = {isa = PBXBuildFile; fileRef = 01C688731BCF995F00DB7828 /* StepSlider.h */; settings = {ATTRIBUTES = (Public, ); }; };
 /* End PBXBuildFile section */
 
 /* Begin PBXContainerItemProxy section */
@@ -55,8 +55,8 @@
 		01C688651BCF98C400DB7828 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/Main.storyboard; sourceTree = "<group>"; };
 		01C6886A1BCF98C400DB7828 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		01C6886C1BCF98C400DB7828 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = Info.plist; path = ../Info.plist; sourceTree = "<group>"; };
-		01C688731BCF995F00DB7828 /* StepSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; path = StepSlider.h; sourceTree = "<group>"; };
-		01C688741BCF995F00DB7828 /* StepSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; path = StepSlider.m; sourceTree = "<group>"; };
+		427BAD3C253252E00057EE3E /* StepSlider.h */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.h; name = StepSlider.h; path = Sources/StepSlider/include/StepSlider.h; sourceTree = SOURCE_ROOT; };
+		427BAD3F253252E80057EE3E /* StepSlider.m */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.c.objc; name = StepSlider.m; path = Sources/StepSlider/StepSlider.m; sourceTree = SOURCE_ROOT; };
 		42F0F56720DD111B0046AF6D /* StepSlider.framework */ = {isa = PBXFileReference; explicitFileType = wrapper.framework; includeInIndex = 0; path = StepSlider.framework; sourceTree = BUILT_PRODUCTS_DIR; };
 		42F0F56A20DD111B0046AF6D /* StepSlider-Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; name = "StepSlider-Info.plist"; path = "StepSlider/StepSlider-Info.plist"; sourceTree = "<group>"; };
 		42F0F57520DD11270046AF6D /* UIKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; name = UIKit.framework; path = System/Library/Frameworks/UIKit.framework; sourceTree = SDKROOT; };
@@ -181,8 +181,8 @@
 		42F0F57E20DD1F860046AF6D /* StepSlider */ = {
 			isa = PBXGroup;
 			children = (
-				01C688731BCF995F00DB7828 /* StepSlider.h */,
-				01C688741BCF995F00DB7828 /* StepSlider.m */,
+				427BAD3C253252E00057EE3E /* StepSlider.h */,
+				427BAD3F253252E80057EE3E /* StepSlider.m */,
 			);
 			path = StepSlider;
 			sourceTree = "<group>";
@@ -194,7 +194,7 @@
 			isa = PBXHeadersBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42F0F57C20DD16460046AF6D /* StepSlider.h in Headers */,
+				427BAD3D253252E00057EE3E /* StepSlider.h in Headers */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
@@ -311,7 +311,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				42F0F57920DD116A0046AF6D /* StepSlider.m in Sources */,
+				427BAD40253252E80057EE3E /* StepSlider.m in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};
