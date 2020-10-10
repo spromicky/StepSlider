@@ -244,7 +244,7 @@
 		01C688501BCF98C300DB7828 /* Project object */ = {
 			isa = PBXProject;
 			attributes = {
-				LastUpgradeCheck = 1100;
+				LastUpgradeCheck = 1200;
 				ORGANIZATIONNAME = spromicky;
 				TargetAttributes = {
 					01C688571BCF98C300DB7828 = {
