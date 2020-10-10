@@ -251,8 +251,24 @@
         case 2:
             self.sliderView.labels = nil;
             break;
-        case 3:
+    }
+    flag++;
+}
 
+- (IBAction)toggleAttributedLabels:(UIButton *)sender
+{
+    static NSUInteger flag = 0;
+    switch (flag % 2) {
+        case 0:
+        {
+            NSAttributedString *secondString = [[NSMutableAttributedString alloc] initWithString:@"Second" attributes:@{NSFontAttributeName: [UIFont fontWithName:@"Menlo" size:20.f]}];
+            NSMutableAttributedString *thirdString = [[NSMutableAttributedString alloc] initWithString:@"Third" attributes:@{NSForegroundColorAttributeName: [UIColor colorWithRed:0.90f green:0.64f blue:0.45f alpha:1.f]}];
+
+            self.sliderView.labels = @[@"First", secondString, thirdString];
+            break;
+        }
+        case 1:
+            self.sliderView.labels = nil;
             break;
     }
     flag++;

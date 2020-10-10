@@ -39,6 +39,10 @@ slider.labels = @[@"Some string", @"another string", @"one more"];
 
 `slider.adjustLabel` - set first and last label to exactly to frame left and right.
 
+From version `1.8.0` StepSlider support `NSAttributedString` as label text.
+
+![](screenshots/attributedString.png)
+
 #### Images
 
 For `1.2.0` and higher you can use images for `sliderCircle ` and `trackCircles`. For `trackCircles` supported two states: `normal` and `selected`.
