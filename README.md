@@ -85,6 +85,10 @@ github "spromicky/StepSlider" ~> 1.3.0
 
 Run `carthage update` to build the framework and drag the built `StepSlider.framework` into your Xcode project.
 
+### Swift Package Manager
+
+Start `1.8.0` StepSlider can be integrated in your Xcode project. When adding new package search `StepSlider` and select version `1.8.0` or above.
+
 ### Manual Installation
 
 Just copy `StepSlider` class to your project.
