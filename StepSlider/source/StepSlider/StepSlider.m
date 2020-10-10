@@ -356,11 +356,19 @@ void withoutCAAnimation(withoutAnimationBlock code)
             } else {
                 size = CGSizeMake([self roundForTextDrawing:maxWidth], CGFLOAT_MAX);
             }
-            
-            CGFloat height = [self.labels[i] boundingRectWithSize:size
-                                                          options:NSStringDrawingUsesLineFragmentOrigin
-                                                       attributes:@{NSFontAttributeName : self.labelFont}
-                                                          context:nil].size.height;
+
+            CGFloat height;
+
+            if ([self.labels[i] isKindOfClass:[NSString class]]) {
+                height = [self.labels[i] boundingRectWithSize:size
+                                                      options:NSStringDrawingUsesLineFragmentOrigin
+                                                   attributes:@{NSFontAttributeName : self.labelFont}
+                                                      context:nil].size.height;
+            } else {
+                height = [self.labels[i] boundingRectWithSize:size
+                                                      options:NSStringDrawingUsesLineFragmentOrigin
+                                                      context:nil].size.height;
+            }
             labelHeight = fmax(ceil(height), labelHeight);
         }
         return labelHeight;
@@ -620,11 +628,38 @@ void withoutCAAnimation(withoutAnimationBlock code)
     [self setNeedsLayout];
 }
 
-- (void)setLabels:(NSArray<NSString *> *)labels
+- (void)setLabels:(NSArray *)labels
 {
     NSAssert(labels.count != 1, @"Labels count can not be equal to 1!");
-    if (_labels != labels) {
-        _labels = labels;
+
+    NSMutableArray *mLabels = [NSMutableArray arrayWithArray:labels];
+    for (NSUInteger i = 0; i < labels.count; i++) {
+        BOOL isAttributedString = [labels[i] isKindOfClass:[NSAttributedString class]];
+        NSAssert([labels[i] isKindOfClass:[NSString class]] || isAttributedString, @"Labels must be an instance of NSString or NSAttributedString!");
+
+        if (isAttributedString) {
+            NSMutableAttributedString *attributedString = [[NSMutableAttributedString alloc] initWithAttributedString: labels[i]];
+            NSRange fullRange = NSMakeRange(0, attributedString.length);
+
+            [attributedString enumerateAttribute:NSFontAttributeName inRange:fullRange options:0 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
+
+                if (!value) {
+                    [attributedString addAttribute:NSFontAttributeName value:self.labelFont range:range];
+                }
+            }];
+            [attributedString enumerateAttribute:NSForegroundColorAttributeName inRange:fullRange options:0 usingBlock:^(id  _Nullable value, NSRange range, BOOL * _Nonnull stop) {
+
+                if (!value) {
+                    [attributedString addAttribute:NSForegroundColorAttributeName value:self.labelColor range:range];
+                }
+            }];
+
+            mLabels[i] = attributedString;
+        }
+    }
+
+    if (_labels != mLabels) {
+        _labels = mLabels;
         
         if (_labels.count > 0) {
             _maxCount = _labels.count;

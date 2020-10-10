@@ -82,9 +82,10 @@ IB_DESIGNABLE
 
 /**
  *  Text for labels that will be show near every dot.
- *  Note: If `labels` array not empty set `maxCount` to labels count.
+ *  The text must be an instance of `NSString` or `NSAttributedString`.
+ *  Note: If `labels` array are not empty, then `maxCount` will be equal to `labels.count`.
  */
-@property (nonatomic, strong) NSArray <NSString *> *labels;
+@property (nonatomic, strong) NSArray *labels;
 
 /**
  *  Font of dot labels.
