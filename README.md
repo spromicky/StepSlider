@@ -66,7 +66,7 @@ For `1.2.0` and higher you can use images for `sliderCircle ` and `trackCircles`
 To integrate `StepSlider` into your Xcode project using CocoaPods, specify it in your `Podfile`:
 
 ```
-pod 'StepSlider', '~> 1.3.0'
+pod 'StepSlider', '~> 1.8.0'
 ```
 
 Then, run the following command:
@@ -80,7 +80,7 @@ $ pod install
 To integrate `StepSlider` into your Xcode project using Carthage, specify it in your `Cartfile`:
 
 ```
-github "spromicky/StepSlider" ~> 1.3.0
+github "spromicky/StepSlider" ~> 1.8.0
 ```
 
 Run `carthage update` to build the framework and drag the built `StepSlider.framework` into your Xcode project.
